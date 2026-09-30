@@ -1,0 +1,20 @@
+# Kaggle data & outputs
+input/
+models/
+oof/
+submissions/
+*.zip
+*.tar.gz
+
+# Credentials & secrets
+kaggle.json
+.env
+
+# Python & notebooks
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/

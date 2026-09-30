@@ -1,0 +1,19 @@
+[project]
+name = "rsna-knee-abnormality-detection"
+version = "0.1.0"
+description = "Kaggle competition workspace for rsna-knee-abnormality-detection"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    "lightgbm",
+    "xgboost",
+    "catboost",
+    "pytest",
+    "ruff",
+]
+
+[tool.ruff]
+line-length = 100
