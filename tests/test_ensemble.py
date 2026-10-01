@@ -53,3 +53,16 @@ def test_multi_model_rank_average():
     assert len(ens) == 3
     assert "ACL" in ens.columns
     assert (ens["ACL"].to_numpy() == np.array([1/3, 2/3, 1.0])).all()
+
+
+def test_foundation_specialist_fusion():
+    studies = ["s1", "s2", "s3"]
+    pub_df = pd.DataFrame({"StudyInstanceUID": studies})
+    spec_df = pd.DataFrame({"StudyInstanceUID": studies})
+    for c in TARGET_COLS:
+        pub_df[c] = [0.2, 0.5, 0.8]
+        spec_df[c] = [0.1, 0.6, 0.9]
+    blended = blend_routed_predictions(pub_df, spec_df)
+    assert len(blended) == 3
+    assert not blended.isnull().any().any()
+    assert list(blended.columns) == ["StudyInstanceUID"] + list(TARGET_COLS)
