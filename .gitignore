@@ -1,8 +1,8 @@
 # Kaggle data & outputs
-input/
-models/
-oof/
-submissions/
+/input/
+/models/
+/oof/
+/submissions/
 *.zip
 *.tar.gz
 

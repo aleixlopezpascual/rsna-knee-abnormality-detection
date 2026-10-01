@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
+
 import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
@@ -13,12 +14,22 @@ def compute_target_roc_auc(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     y_true = np.asarray(y_true).ravel()
     y_pred = np.asarray(y_pred).ravel()
 
-    # If only one class present in y_true, ROC-AUC is mathematically undefined
-    unique_classes = np.unique(y_true[~np.isnan(y_true)])
+    valid = ~np.isnan(y_true) & ~np.isnan(y_pred)
+    y_true = y_true[valid]
+    y_pred = y_pred[valid]
+
+    # If continuous soft labels are passed as y_true, binarize at 0.5
+    unique_vals = np.unique(y_true)
+    if len(unique_vals) > 2 or not np.all(np.isin(unique_vals, [0, 1])):
+        y_true_bin = (y_true >= 0.5).astype(int)
+    else:
+        y_true_bin = y_true.astype(int)
+
+    unique_classes = np.unique(y_true_bin)
     if len(unique_classes) < 2:
         return 0.5
 
-    return float(roc_auc_score(y_true, y_pred))
+    return float(roc_auc_score(y_true_bin, y_pred))
 
 
 def compute_competition_metric(

@@ -4,9 +4,9 @@ import pytest
 
 from src.config import TARGET_COLS
 from src.metrics import (
-    compute_target_roc_auc,
     compute_competition_metric,
     compute_detailed_metrics,
+    compute_target_roc_auc,
 )
 
 
