@@ -1,0 +1,28 @@
+src/train.py
+  s_5a3dcd24dda13f::t_7179bc9233c4a4 239-243
+  s_5a3dcd24dda13f::t_a7ca26e3a8e76b 16
+  s_5a3dcd24dda13f::t_cd57b245936a32 60,75-78
+  s_5a3dcd24dda13f::t_9737804954ae8b 155-170,187
+src/loss.py
+  s_5a3dcd24dda13f::t_f1d1e734a3e758 1-7,9-131
+tests/test_loss.py
+  s_5a3dcd24dda13f::t_9f0076098c0627 1-61
+docs/experiments.md
+  s_5a3dcd24dda13f::t_f7403078e6d85f 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "ab725c73eee8d47355713eef88ed35228346c0f2",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
