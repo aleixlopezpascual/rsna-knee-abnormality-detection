@@ -1,0 +1,21 @@
+src/report_reader.py
+  s_5a3dcd24dda13f::t_f401bea14aeae2 1067-1069,1086-1087
+tests/test_report_reader.py
+  s_5a3dcd24dda13f::t_d3139835a09827 46-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "9e8d0ecc47a715935dc353cdb03e1084f8b0556a",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
