@@ -1,0 +1,21 @@
+tests/test_optimize_routing.py
+  s_5a3dcd24dda13f::t_6de35b8ce23a37 1-52
+src/optimize_routing.py
+  s_5a3dcd24dda13f::t_9cb37c607196be 1-198
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "37d4caee55e1a57d908e63df3f7c2c3784f3f543",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
