@@ -35,6 +35,10 @@ def test_target_routing_weights():
     assert weights["Lateral Meniscus"] == 1.00
     assert weights["Medial Meniscus"] == 0.80
     assert weights["ACL"] == 0.75
+    assert weights["MCL"] == 0.75
+    assert weights["Medial OA"] == 0.72
+    assert weights["Fracture"] == 0.78
+    assert weights["Contusion"] == 0.65
     assert weights["Effusion"] == 0.60
 
 

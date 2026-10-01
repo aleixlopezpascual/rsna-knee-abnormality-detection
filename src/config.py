@@ -28,11 +28,14 @@ TARGET_COLS = [
 # SOTA clinical routing weights (CoAtNet/CNN family weight vs. Transformer family)
 COATNET_ROUTING_WEIGHTS: dict[str, float] = {
     "__default__": 0.60,
-    "Lateral Meniscus": 1.00,
-    "Medial Meniscus": 0.80,
     "ACL": 0.75,
+    "MCL": 0.75,
+    "Medial Meniscus": 0.80,
+    "Lateral Meniscus": 1.00,
+    "Medial OA": 0.72,
     "Lateral OA": 0.75,
-    "Fracture": 0.75,
+    "Fracture": 0.78,
+    "Contusion": 0.65,
 }
 
 
