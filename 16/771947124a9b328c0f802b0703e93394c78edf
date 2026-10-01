@@ -1,0 +1,63 @@
+README.md
+  s_5a3dcd24dda13f::t_ed890e33edf78c 1-247
+notebooks/submission/kernel-metadata.json
+  s_5a3dcd24dda13f::t_caeeea876ea671 1-26
+tests/test_report_reader.py
+  s_5a3dcd24dda13f::t_400d4fd2848691 1-12,14-63
+  s_5a3dcd24dda13f::t_dfc07233827e7f 13
+src/metrics.py
+  s_5a3dcd24dda13f::t_a2947f2c3a6ca1 17-28,32
+tests/test_dataset.py
+  s_5a3dcd24dda13f::t_2bd54a2138705a 36,42,80-82,87-88
+  s_5a3dcd24dda13f::t_003cb46dc7c945 1-15,18-35,37-41,43-79,83-86,89-124
+src/models/__init__.py
+  s_5a3dcd24dda13f::t_6edc0816d4b7d6 1-7
+src/models/slot_head.py
+  s_5a3dcd24dda13f::t_dc70e8bfbeda49 1-111
+src/train.py
+  s_5a3dcd24dda13f::t_713158cc05b5be 62
+  s_5a3dcd24dda13f::t_1d7cf2184e26b3 1-10,12-13,15-61,63-241,243-256
+  s_5a3dcd24dda13f::t_e1c36771da00d9 242
+scripts/setup_symlinks.sh
+  s_5a3dcd24dda13f::t_e5e78fbdae44fb 1-23
+pyproject.toml
+  s_5a3dcd24dda13f::t_edfdcf7dbbf47b 20-24
+.gitignore
+  s_5a3dcd24dda13f::t_6d323c9b04c1f3 2-5
+src/models/backbones.py
+  s_5a3dcd24dda13f::t_bc513155133736 1-30
+src/dataset.py
+  s_5a3dcd24dda13f::t_0aa3e0294d69df 188-194
+  s_5a3dcd24dda13f::t_94c771ddc6a0cf 145
+  s_5a3dcd24dda13f::t_a84aa1e8108867 1-3,5-12,14-144,146-187,195-284
+docs/experiments.md
+  s_5a3dcd24dda13f::t_60189fb7fa94ea 16
+  s_5a3dcd24dda13f::t_c6e96f75669144 15,17
+src/report_reader.py
+  s_5a3dcd24dda13f::t_c5c4e500ef6f8a 1-1183
+src/infer.py
+  s_5a3dcd24dda13f::t_7331eddecb5fc9 1-101
+AGENTS.md
+  s_5a3dcd24dda13f::t_4e3cafce501999 1,3,7,9-88,92,94-136,140-235,237-241
+src/models/model.py
+  s_5a3dcd24dda13f::t_7ca183dc038704 1-95
+tests/test_models.py
+  s_5a3dcd24dda13f::t_f0b0e638d0397d 1-67,69
+  s_5a3dcd24dda13f::t_26a75203ebcdea 68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "16771947124a9b328c0f802b0703e93394c78edf",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
