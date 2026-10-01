@@ -1,0 +1,23 @@
+tests/test_specialist_metrics.py
+  s_5a3dcd24dda13f::t_b92b253e3c8612 1-43,45-47
+  s_5a3dcd24dda13f::t_195dd4df285d8d 44
+scripts/evaluate_specialist_oof.py
+  s_5a3dcd24dda13f::t_4652b409182946 1-35,37,39-104
+  s_5a3dcd24dda13f::t_f9c9e647e7d6a2 36,38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "d0ad69d76a06230deb336a3ff511289f33dab86b",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
