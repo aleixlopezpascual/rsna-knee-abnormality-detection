@@ -1064,6 +1064,9 @@ def _severity(clause: str) -> float:
     return 0.75
 
 
+POSTOP_RESECTION = _rx(r"meniscectom\w*", r"resection\b", r"status post\b", r"\bs/p\b", r"prior repair")
+
+
 def _score_clauses(
     cls: list[str],
     anat_rx: _Matcher,
@@ -1079,6 +1082,9 @@ def _score_clauses(
         if not m:
             continue
         if decoy_rx is not None and decoy_rx.search(c):
+            continue
+        if POSTOP_RESECTION.search(c) and not TEAR.search(c):
+            n_neg += 1
             continue
         if path_rx is not None and not path_rx.search(c):
             if NORMALITY.search(c) and not NEGATION.search(c):

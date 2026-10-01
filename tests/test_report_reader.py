@@ -43,6 +43,19 @@ def test_extract_from_report_german_oa():
     assert scores["Baker's"] > 0.7
 
 
+def test_extract_distinguishes_postoperative_meniscectomy_without_tear():
+    # Meniscectomy without recurrent tear should NOT be labeled as positive tear (>0.80)
+    report = "Status post partial medial meniscectomy. No recurrent tear."
+    scores = extract_from_report(report)
+    assert scores["Medial Meniscus"] < 0.35
+
+
+def test_extract_subchondral_cyst_not_contusion():
+    report = "Subchondral degenerative cyst of the medial femoral condyle. No bone marrow contusion."
+    scores = extract_from_report(report)
+    assert scores["Contusion"] < 0.25
+
+
 def test_populate_labels_preserves_gold():
     df = pd.DataFrame({
         "StudyInstanceUID": ["study_01", "study_02"],
