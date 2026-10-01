@@ -1,0 +1,128 @@
+from __future__ import annotations
+
+from collections.abc import Sequence
+
+import numpy as np
+import pandas as pd
+
+from src.config import TARGET_COLS, get_target_routing_weights
+
+
+def rank_normalize_predictions(
+    df: pd.DataFrame,
+    target_cols: Sequence[str] = TARGET_COLS,
+) -> pd.DataFrame:
+    """Transform prediction probabilities into fractional percentile ranks in [0, 1].
+
+    Because Macro ROC-AUC evaluates relative concordance rather than calibrated probabilities,
+    rank normalization neutralizes distribution differences across heterogeneous model families
+    (e.g., Vision Transformers vs. Convolutional Nets).
+
+    Args:
+        df: DataFrame containing study predictions.
+        target_cols: List of target columns to normalize.
+
+    Returns:
+        DataFrame with ranked targets in [0, 1].
+    """
+    out = df.copy()
+    n = len(out)
+    if n <= 1:
+        return out
+
+    for col in target_cols:
+        if col in out.columns:
+            out[col] = out[col].rank(method="average", pct=True)
+    return out
+
+
+def blend_routed_predictions(
+    cnn_df: pd.DataFrame,
+    transformer_df: pd.DataFrame,
+    routing_weights: dict[str, float] | None = None,
+    target_cols: Sequence[str] = TARGET_COLS,
+    id_col: str = "StudyInstanceUID",
+) -> pd.DataFrame:
+    """Blend CNN/CoAtNet and Transformer predictions using clinical target routing.
+
+    Applies the proven anatomical routing matrix in rank space:
+    - Lateral Meniscus: 100% CNN/CoAtNet (CoAtNet dramatically dominates)
+    - Medial Meniscus: 80% CNN / 20% Transformer
+    - ACL, Lateral OA, Fracture: 75% CNN / 25% Transformer
+    - Default findings: 60% CNN / 40% Transformer
+
+    Args:
+        cnn_df: Predictions from CNN/CoAtNet family models.
+        transformer_df: Predictions from Vision Transformer family models (e.g. DINOv2).
+        routing_weights: Optional custom per-target CNN weights in [0, 1].
+        target_cols: List of 12 target column names.
+        id_col: Identifier column name.
+
+    Returns:
+        Blended, rank-normalized DataFrame matching competition schema.
+    """
+    if routing_weights is None:
+        routing_weights = get_target_routing_weights()
+
+    # Align on Study IDs
+    c_df = cnn_df.set_index(id_col)
+    t_df = transformer_df.set_index(id_col).reindex(c_df.index)
+
+    # Rank-transform both model streams
+    c_ranked = rank_normalize_predictions(c_df, target_cols)
+    t_ranked = rank_normalize_predictions(t_df, target_cols)
+
+    blended = pd.DataFrame(index=c_df.index)
+
+    for col in target_cols:
+        w_cnn = float(routing_weights.get(col, 0.60))
+        w_trans = 1.0 - w_cnn
+
+        c_vals = c_ranked[col].to_numpy(dtype=np.float64)
+        t_vals = t_ranked[col].to_numpy(dtype=np.float64)
+
+        blended[col] = w_cnn * c_vals + w_trans * t_vals
+
+    # Final rank normalization over the blended values
+    blended = rank_normalize_predictions(blended, target_cols)
+    return blended.reset_index()
+
+
+def multi_model_rank_average(
+    predictions_list: list[pd.DataFrame],
+    weights: list[float] | None = None,
+    target_cols: Sequence[str] = TARGET_COLS,
+    id_col: str = "StudyInstanceUID",
+) -> pd.DataFrame:
+    """Ensemble multiple model predictions via weighted rank averaging.
+
+    Args:
+        predictions_list: List of prediction DataFrames.
+        weights: Optional blending weights per model (normalized to sum to 1.0).
+        target_cols: Target column names.
+        id_col: Study ID column name.
+
+    Returns:
+        Ensemble prediction DataFrame.
+    """
+    if not predictions_list:
+        raise ValueError("predictions_list cannot be empty")
+
+    n_models = len(predictions_list)
+    if weights is None:
+        w = np.full(n_models, 1.0 / n_models, dtype=np.float64)
+    else:
+        w = np.asarray(weights, dtype=np.float64)
+        w = w / np.sum(w)
+
+    base = predictions_list[0].set_index(id_col)
+    accum = np.zeros((len(base), len(target_cols)), dtype=np.float64)
+
+    for i, df in enumerate(predictions_list):
+        aligned = df.set_index(id_col).reindex(base.index)
+        ranked = rank_normalize_predictions(aligned, target_cols)
+        accum += w[i] * ranked[list(target_cols)].to_numpy(dtype=np.float64)
+
+    out = pd.DataFrame(accum, index=base.index, columns=list(target_cols))
+    out = rank_normalize_predictions(out, target_cols)
+    return out.reset_index()

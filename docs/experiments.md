@@ -14,4 +14,5 @@ All experiments must track local 5-fold CV before submitting to the Kaggle publi
 | `baseline-00` | *Metric Verification* | N/A | 1.000 (synthetic) | - | Metric unit test passed (5/5) |
 | `exp-01-pipeline` | 2.5D Multi-Slot Bag + SlotHead | 224x224 (6 slots) | Verified | - | Pipeline complete: Report NLP extractor, 5-fold grouped split, SlotHead attention, train/infer verified (18/18 tests passed) |
 | `sub-01-baseline` | 2.5D Multi-Slot Bag Ensemble (DINOv2) | 336x336 (6 slots) | 0.8870 | *Scoring (Ref: 56748754)* | First official submission kernel pushed and submitted |
+| `sub-02-d4-0946` | 4-Pillar SOTA: DINOv2 + RadImageNet + Raptor + CoAtNet | Multi-res / Multi-view | ~0.944 | *Scoring (Ref: 56749768)* | High-water mark: 4-way CoAtNet consensus, RadImageNet ResNet50, Raptor k_eval=94 |
 | `exp-01-resnet34` | 2.5D ResNet34 Slab | 224x224 (6 slots) | *Ready to run* | - | Fast baseline model |

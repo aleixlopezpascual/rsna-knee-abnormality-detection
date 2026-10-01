@@ -87,6 +87,19 @@ Our repository diverges from naive public baselines through domain-informed medi
 - **Train/Test Modality Asymmetry:** Free-text radiology reports are provided in training, but **test data contains NO text reports** (only raw DICOMs). Text encoders (e.g. DeBERTa/LLM readers) may only be used as offline pseudo-labelers or distillation teachers; the inference graph must strictly accept MRI DICOMs.
 - **Percentile Rank Calibration:** ROC-AUC measures relative rank ordering. Convert raw prediction probabilities to fractional percentiles (`pd.Series.rank(pct=True)`) before ensembling distinct models or generating final submissions.
 
+### G. The 0.946 SOTA Frontier: 4-Pillar Multi-Family Fusion
+The top-performing public solutions (0.942 → 0.946) combine four complementary model families:
+1. **DINOv2 with Shared Prefix Acceleration:** 20 members sharing the first 6 transformer layers (evaluated once per study, saving 80% compute), combined with 5-fold A5 cross-attention heads.
+2. **Medical Pretraining with RadImageNet (ResNet-50):** Features trained on 1.3M medical images (`marwanmath/resnet-50-radimagenet-marwan`) with dual-GPU persistent replicas and 88-feature gated calibrator.
+3. **Raptor Volumetric Multi-Span Slicing (4 Arms):** Evaluates 94 sampled window slices per study across `maxspan-v5` (0.60), `native384dense-v10` (0.10), `maxspan-v5-reverse` (0.10), and `native384-v8` (0.20).
+4. **CoAtNet 4-Way Multi-Scale Hybrid Consensus:** Blends four CoAtNet models (`resgated_top3`, `d4_depthzone_swa3`, `global96_top3`, `repairv1_top3`).
+5. **Target-Specific Clinical Routing Matrix:**
+   - `Lateral Meniscus`: 100% CoAtNet (CoAtNet dramatically dominates here; transformers fail).
+   - `Medial Meniscus`: 80% CoAtNet / 20% Transformer stack.
+   - `ACL`, `Lateral OA`, `Fracture`: 75% CoAtNet / 25% Transformer stack.
+   - Default findings: 60% CoAtNet / 40% Transformer stack.
+   - Always fuse in rank space (`rank(method="average", pct=True)`).
+
 ---
 
 ## 3. Project Architecture & Directory Layout

@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+
 import torch
-import torch.nn as nn
+from torch import nn
+
 from src.config import TARGET_COLS
 
 # Prior preference table mapping 12 targets to preferred slot indices (0 to 5)

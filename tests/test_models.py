@@ -3,7 +3,7 @@ from __future__ import annotations
 import torch
 import torch.nn.functional as F
 
-from src.config import TARGET_COLS
+from src.config import TARGET_COLS, get_target_routing_weights
 from src.models import KneeMultiSlotModel, SlotHead, build_backbone
 
 
@@ -13,6 +13,29 @@ def test_build_backbone():
     x = torch.randn(2, 3, 64, 64)
     out = backbone(x)
     assert out.shape == (2, 512)
+
+
+def test_build_backbone_aliases():
+    # Test RadImageNet ResNet50 alias
+    _bb_rad, dim_rad = build_backbone("radimagenet_resnet50", pretrained=False)
+    assert dim_rad == 2048
+
+    # Test CoAtNet alias
+    _bb_coat, dim_coat = build_backbone("coatnet", pretrained=False)
+    assert dim_coat == 768
+
+    # Test ConvNeXt alias
+    _bb_cnx, dim_cnx = build_backbone("convnext", pretrained=False)
+    assert dim_cnx == 640
+
+
+def test_target_routing_weights():
+    weights = get_target_routing_weights()
+    assert len(weights) == len(TARGET_COLS)
+    assert weights["Lateral Meniscus"] == 1.00
+    assert weights["Medial Meniscus"] == 0.80
+    assert weights["ACL"] == 0.75
+    assert weights["Effusion"] == 0.60
 
 
 def test_slot_head_forward():

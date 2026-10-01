@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from pathlib import Path
+
 import torch
-import torch.nn as nn
+from torch import nn
+
 from src.config import TARGET_COLS
 from src.models.backbones import build_backbone
 from src.models.slot_head import SlotHead
@@ -17,6 +20,7 @@ class KneeMultiSlotModel(nn.Module):
     Args:
         backbone_name: Model architecture name (default 'resnet34').
         pretrained: Whether to use pretrained weights.
+        weights_path: Optional explicit path to custom weights (e.g. RadImageNet .pt).
         n_slots: Number of canonical acquisition slots (default 6).
         n_targets: Number of abnormality findings to predict (default 12).
         head_hidden: Hidden dimension for SlotHead attention.
@@ -29,6 +33,7 @@ class KneeMultiSlotModel(nn.Module):
         self,
         backbone_name: str = "resnet34",
         pretrained: bool = False,
+        weights_path: str | Path | None = None,
         n_slots: int = 6,
         n_targets: int = 12,
         head_hidden: int = 256,
@@ -44,6 +49,7 @@ class KneeMultiSlotModel(nn.Module):
             name=backbone_name,
             pretrained=pretrained,
             in_chans=3,
+            weights_path=weights_path,
         )
 
         self.head = SlotHead(

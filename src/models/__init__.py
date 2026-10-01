@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from src.models.backbones import build_backbone
-from src.models.slot_head import SlotHead, SLOT_PRIOR_TABLE
 from src.models.model import KneeMultiSlotModel
+from src.models.slot_head import SLOT_PRIOR_TABLE, SlotHead
 
-__all__ = ["build_backbone", "SlotHead", "SLOT_PRIOR_TABLE", "KneeMultiSlotModel"]
+__all__ = ["SLOT_PRIOR_TABLE", "KneeMultiSlotModel", "SlotHead", "build_backbone"]
