@@ -1,0 +1,21 @@
+tests/test_landmark.py
+  s_5a3dcd24dda13f::t_3cba3a9a228304 1-21
+src/landmark.py
+  s_5a3dcd24dda13f::t_8101f317611565 1-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "920ab8dd9fe4d0a7ffae4be45a83b122ac2a76bc",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
