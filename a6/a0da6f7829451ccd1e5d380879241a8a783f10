@@ -1,0 +1,40 @@
+docs/intel/top_notebooks.md
+  s_5a3dcd24dda13f::t_6c4c72d5fb8c6e 1-117
+src/models/backbones.py
+  s_5a3dcd24dda13f::t_4aca1d1da24f2c 3-4,6-14,21,25-26,28-29,31,37-41,43-44,48-61,67-69
+  s_5a3dcd24dda13f::t_43de4a27c8ff29 62-66
+src/models/model.py
+  s_5a3dcd24dda13f::t_e80a0aa052363a 4-5,7-8,23,36,52
+src/config.py
+  s_5a3dcd24dda13f::t_9b96d5b089ca8f 27-43
+tests/test_models.py
+  s_5a3dcd24dda13f::t_2a01a1c90f082a 20,24,28
+  s_5a3dcd24dda13f::t_01722c89e6ad18 6,18-19,21-23,25-27,29-38
+notebooks/submission/d4_0946/kernel-metadata.json
+  s_5a3dcd24dda13f::t_a2d43dea3ea19d 1,3-40
+  s_5a3dcd24dda13f::t_f9739683706028 2
+src/ensemble.py
+  s_5a3dcd24dda13f::t_21589f06754306 1-128
+docs/experiments.md
+  s_5a3dcd24dda13f::t_6204e099e00217 17
+AGENTS.md
+  s_5a3dcd24dda13f::t_4ed37a082cf80a 90-102
+tests/test_ensemble.py
+  s_5a3dcd24dda13f::t_a7cef56e08c371 1-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "a6a0da6f7829451ccd1e5d380879241a8a783f10",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
