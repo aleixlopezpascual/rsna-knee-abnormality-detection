@@ -1,0 +1,24 @@
+notebooks/train_specialist/kernel-metadata.json
+  s_5a3dcd24dda13f::t_d469a635a3be75 1,3-24
+  s_5a3dcd24dda13f::t_03a4a44baca0e1 2
+scripts/build_specialist_notebook.py
+  s_5a3dcd24dda13f::t_4b0561e1555ac9 23
+  s_5a3dcd24dda13f::t_22d3050bd0724d 259
+  s_5a3dcd24dda13f::t_80c5beb21082ce 1-22,24-258,260-284
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "c8e5ee362d34bd65fc956d3de4ce016898ee7453",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
