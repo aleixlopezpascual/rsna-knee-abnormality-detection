@@ -13,6 +13,7 @@ from torch.utils.data import DataLoader
 
 from src.config import INPUT_DIR, MODELS_DIR, OOF_DIR, SEED, TARGET_COLS
 from src.dataset import KneeMultiSlotDataset, generate_report_grouped_folds
+from src.loss import AsymmetricFocalLoss, compute_inverse_frequency_class_weights
 from src.metrics import compute_competition_metric, compute_detailed_metrics
 from src.models import KneeMultiSlotModel
 from src.report_reader import populate_labels_from_reports
@@ -56,6 +57,7 @@ def train_one_epoch(
     optimizer: torch.optim.Optimizer,
     device: torch.device,
     use_amp: bool = False,
+    loss_fn: nn.Module | None = None,
 ) -> float:
     model.train()
     total_loss = 0.0
@@ -70,7 +72,10 @@ def train_one_epoch(
         optimizer.zero_grad()
         with torch.autocast(device_type=device.type, enabled=use_amp):
             logits = model(imgs, mask)
-            loss = compute_weighted_bce_loss(logits, targets, weights)
+            if loss_fn is not None:
+                loss = loss_fn(logits, targets, sample_weights=weights)
+            else:
+                loss = compute_weighted_bce_loss(logits, targets, weights)
 
         if use_amp and device.type == "cuda":
             scaler.scale(loss).backward()
@@ -147,6 +152,22 @@ def train_fold(
         prior=True,
     ).to(device)
 
+    # Configure loss function
+    if args.loss == "asl":
+        class_weights = compute_inverse_frequency_class_weights(
+            train_df, target_cols=TARGET_COLS, beta=args.class_weight_beta
+        ).to(device)
+        loss_fn: nn.Module = AsymmetricFocalLoss(
+            gamma_neg=args.gamma_neg,
+            gamma_pos=args.gamma_pos,
+            clip=args.clip,
+            class_weights=class_weights,
+        ).to(device)
+        print(f"Using Asymmetric Focal Loss (gamma_neg={args.gamma_neg}, gamma_pos={args.gamma_pos}, clip={args.clip})")
+    else:
+        loss_fn = None
+        print("Using standard Weighted BCE Loss")
+
     # Differential learning rates: slower for backbone, faster for head
     param_groups = [
         {"params": model.backbone.parameters(), "lr": args.lr_backbone},
@@ -163,7 +184,7 @@ def train_fold(
     save_path = Path(MODELS_DIR) / f"{args.model}_fold{fold}_best.pth"
 
     for epoch in range(1, args.epochs + 1):
-        train_loss = train_one_epoch(model, train_loader, optimizer, device, use_amp=args.amp)
+        train_loss = train_one_epoch(model, train_loader, optimizer, device, use_amp=args.amp, loss_fn=loss_fn)
         val_auc, detailed, preds, targets = evaluate(model, val_loader, device)
         scheduler.step()
 
@@ -215,6 +236,11 @@ def main() -> None:
     parser.add_argument("--device", type=str, default="auto", help="Execution device (cuda/mps/cpu/auto)")
     parser.add_argument("--amp", action="store_true", help="Use automatic mixed precision")
     parser.add_argument("--dry-run", action="store_true", help="Run 1 epoch with small synthetic subset")
+    parser.add_argument("--loss", type=str, choices=["bce", "asl"], default="bce", help="Loss function (bce or asl)")
+    parser.add_argument("--gamma-neg", type=float, default=4.0, help="ASL negative focusing parameter")
+    parser.add_argument("--gamma-pos", type=float, default=1.0, help="ASL positive focusing parameter")
+    parser.add_argument("--clip", type=float, default=0.05, help="ASL negative probability margin clip")
+    parser.add_argument("--class-weight-beta", type=float, default=0.35, help="Inverse frequency weight exponent")
 
     args = parser.parse_args()
     seed_everything(args.seed)
