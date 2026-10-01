@@ -100,6 +100,15 @@ The top-performing public solutions (0.942 → 0.946) combine four complementary
    - Default findings: 60% CoAtNet / 40% Transformer stack.
    - Always fuse in rank space (`rank(method="average", pct=True)`).
 
+### H. Compute Governance & Zero-Training Exhaustion Protocol
+- **Local Machine (Apple M2 Pro 32GB):** Reserved for rapid modular library development, unit testing (pytest in 4s), report NLP extraction, ensembling experiments, and rank calibration.
+- **Kaggle Cloud GPUs (Dual Tesla T4):** Reserved for heavy 5-fold training and private test set inference.
+- **The Zero-Training Exhaustion Rule:** AI assistants must NEVER jump straight to long, multi-hour training runs without first exhausting all zero-training gains:
+  1. Diagnostic error audits on current predictions.
+  2. Hyperparameter and routing weight optimization on existing pretrained checkpoint families.
+  3. Window density ($k_{\text{eval}}$) and rank-space power calibration.
+  4. Formulating a precise, hypothesis-driven proof of ROI with measurable CV targets before dispatching heavy training.
+
 ---
 
 ## 3. Project Architecture & Directory Layout
