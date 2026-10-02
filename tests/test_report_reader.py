@@ -56,6 +56,19 @@ def test_extract_subchondral_cyst_not_contusion():
     assert scores["Contusion"] < 0.25
 
 
+def test_strip_clinical_indication_prevents_false_positives():
+    report = """
+    Indication: Anterior knee pain after fall. Rule out ACL tear and assess for occult stress fracture.
+    TECHNIQUE: MRI of the knee in three planes.
+    FINDINGS:
+    ACL: Intact and normal. No tear.
+    OSSEOUS: No fracture or marrow contusion.
+    """
+    scores = extract_from_report(report)
+    assert scores["ACL"] < 0.25
+    assert scores["Fracture"] < 0.25
+
+
 def test_populate_labels_preserves_gold():
     df = pd.DataFrame({
         "StudyInstanceUID": ["study_01", "study_02"],

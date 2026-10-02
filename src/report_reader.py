@@ -45,6 +45,65 @@ def normalize(text: str) -> str:
 _SENT_SPLIT = re.compile(r"(?<=[.;!?])\s+|\n+")
 
 
+INDICATION_HEADERS: tuple[str, ...] = (
+    "indication:",
+    "clinical history:",
+    "reason for exam:",
+    "history:",
+    "motivo de consulta:",
+    "motivo del examen:",
+    "indicacion:",
+    "antecedentes:",
+    "clinical indication:",
+    "clinical information:",
+    "fragestellung:",
+    "indicazione:",
+)
+
+SECTION_RECOVERY_HEADERS: tuple[str, ...] = (
+    "technique:",
+    "findings:",
+    "impression:",
+    "comparison:",
+    "mri ",
+    "protocol:",
+    "exam date:",
+    "hallazgos:",
+    "conclusion:",
+    "befund:",
+)
+
+
+def strip_clinical_indication(report: str) -> str:
+    """Remove referral questions and clinical indication headers.
+
+    Physician referral lines ('Indication: Rule out ACL tear') frequently contain pathology
+    words that get misclassified as positive findings even when the MRI scan is completely normal.
+    """
+    if not isinstance(report, str) or not report:
+        return ""
+
+    lines = report.splitlines()
+    cleaned_lines = []
+    skip = False
+
+    for line in lines:
+        l_lower = line.strip().lower()
+        if any(l_lower.startswith(h) for h in INDICATION_HEADERS):
+            skip = True
+            continue
+        if skip:
+            if any(l_lower.startswith(sec) for sec in SECTION_RECOVERY_HEADERS):
+                skip = False
+                cleaned_lines.append(line)
+            else:
+                continue
+        else:
+            cleaned_lines.append(line)
+
+    return "\n".join(cleaned_lines)
+
+
 def clauses(text: str) -> list[str]:
     """Split into clauses, then attach header: lines to following text."""
     norm = normalize(text)
@@ -1118,7 +1177,8 @@ def _score_clauses(
 
 def extract_from_report(report: str) -> dict[str, float]:
     """Extract twelve continuous confidence scores in [0, 1] from one report text."""
-    cls = clauses(report)
+    cleaned_report = strip_clinical_indication(report)
+    cls = clauses(cleaned_report)
     out: dict[str, float] = {}
     path_paired = _rx(TEAR.pattern, DEGEN.pattern, INJURY.pattern)
 
