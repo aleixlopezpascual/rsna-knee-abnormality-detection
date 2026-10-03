@@ -1,0 +1,20 @@
+notebooks/submission/golden_fusion/kernel-metadata.json
+  s_5a3dcd24dda13f::t_5540f22babef35 1,3-41
+  s_5a3dcd24dda13f::t_b342f0ecbccdb9 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "f855c26967a37960857046db0404d478996536c9",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
