@@ -1,0 +1,19 @@
+scripts/build_complete_specialist_notebook.py
+  s_5a3dcd24dda13f::t_6588ff5ff6b35e 1-388
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "4a7fe416c53355fd793cf2d4ffdc2f783355c2e9",
+  "prompts": {},
+  "sessions": {
+    "s_5a3dcd24dda13f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a9584106-d388-4457-a52b-c9f0196c3a40",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
