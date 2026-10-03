@@ -18,3 +18,4 @@ All experiments must track local 5-fold CV before submitting to the Kaggle publi
 | `sub-03-d4-opt-k112` | 4-Pillar SOTA + Densified k_eval=112 + Refined Routing | Multi-res / Multi-view | ~0.947 (Est.) | **0.943** | Verified official submission (Ref: 56750202) scored 0.943 on Public LB |
 | `exp-01-resnet34` | 2.5D ResNet34 Slab | 224x224 (6 slots) | *Ready to run* | - | Fast baseline model |
 | `abl-01-asl-vs-bce` | ASL vs BCE Local Ablation (MPS) | Fold 0 (896 val studies) | ASL: 0.9747 (BCE: 0.9690) | N/A (Local) | Empirical loss proof: Fracture +0.0323 AUC, MCL +0.0067 AUC, Macro +0.0057 AUC |
+| `spec-01-rad50-fold0` | RadImageNet ResNet50 + ASL (Fold 0) | 224x224 (6 slots) | Loss: 0.0636 | N/A (Trained) | Fold 0 Smoke Check complete on Kaggle T4 GPU; 92MB weights saved (specialist_rad_fold0.pth) |
