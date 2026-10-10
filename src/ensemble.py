@@ -126,3 +126,62 @@ def multi_model_rank_average(
     out = pd.DataFrame(accum, index=base.index, columns=list(target_cols))
     out = rank_normalize_predictions(out, target_cols)
     return out.reset_index()
+
+
+DEFAULT_3WAY_ROUTING_WEIGHTS: dict[str, tuple[float, float, float]] = {
+    "Fracture": (0.50, 0.20, 0.30),
+    "MCL": (0.55, 0.25, 0.20),
+    "Lateral Meniscus": (0.60, 0.20, 0.20),
+    "Contusion": (0.55, 0.25, 0.20),
+    "__default__": (0.65, 0.25, 0.10),
+}
+
+
+def three_way_rank_blend(
+    foundation_df: pd.DataFrame,
+    convnext_df: pd.DataFrame,
+    specialist_df: pd.DataFrame,
+    routing_weights: dict[str, tuple[float, float, float]] | None = None,
+    target_cols: Sequence[str] = TARGET_COLS,
+    id_col: str = "StudyInstanceUID",
+) -> pd.DataFrame:
+    """Blend Foundation, ConvNeXt, and Specialist predictions in rank space with 3-way clinical routing.
+
+    Args:
+        foundation_df: 4-Pillar Foundation consensus predictions.
+        convnext_df: 2.5D ConvNeXt reader predictions.
+        specialist_df: ASL Rare-Finding Specialist predictions.
+        routing_weights: Mapping from target -> (w_found, w_cnxt, w_spec).
+        target_cols: Target column names.
+        id_col: Study identifier column.
+
+    Returns:
+        Rank-normalized DataFrame with columns [id_col] + target_cols.
+    """
+    if routing_weights is None:
+        routing_weights = DEFAULT_3WAY_ROUTING_WEIGHTS
+
+    f_df = foundation_df.set_index(id_col)
+    c_df = convnext_df.set_index(id_col).reindex(f_df.index)
+    s_df = specialist_df.set_index(id_col).reindex(f_df.index)
+
+    f_ranked = rank_normalize_predictions(f_df, target_cols)
+    c_ranked = rank_normalize_predictions(c_df, target_cols)
+    s_ranked = rank_normalize_predictions(s_df, target_cols)
+
+    blended = pd.DataFrame(index=f_df.index)
+    for col in target_cols:
+        weights = routing_weights.get(col, routing_weights.get("__default__", (0.65, 0.25, 0.10)))
+        w_f, w_c, w_s = weights
+        tot = w_f + w_c + w_s
+        w_f, w_c, w_s = w_f / tot, w_c / tot, w_s / tot
+
+        f_vals = f_ranked[col].to_numpy(dtype=np.float64)
+        c_vals = c_ranked[col].to_numpy(dtype=np.float64)
+        s_vals = s_ranked[col].to_numpy(dtype=np.float64)
+
+        blended[col] = w_f * f_vals + w_c * c_vals + w_s * s_vals
+
+    blended = rank_normalize_predictions(blended, target_cols)
+    return blended.reset_index()
+

@@ -1,0 +1,24 @@
+{
+  "id": "aleixlopez/rsna-knee-specialist-fold-3-training",
+  "title": "RSNA Knee Specialist Fold 3 Training",
+  "code_file": "rsna-knee-specialist-fold3.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "marwanmath/resnet-50-radimagenet-marwan",
+    "pilkwang/rsna-knee-llm-labels",
+    "pilkwang/rsna-knee-weights"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": []
+}

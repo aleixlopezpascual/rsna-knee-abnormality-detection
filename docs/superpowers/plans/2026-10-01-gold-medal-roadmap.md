@@ -193,7 +193,7 @@ git commit -m "feat(eval): add specialist out-of-fold gate evaluation harness"
 - Produces: Final verified submission with target-routed rank combination:
   $$P_{\text{final}} = 0.70 \times \text{Rank}(P_{\text{public}}) + 0.30 \times \text{Rank}(P_{\text{specialist}})$$
 
-- [ ] **Step 1: Write test for dual-stream foundation-specialist fusion**
+- [x] **Step 1: Write test for dual-stream foundation-specialist fusion**
 
 ```python
 def test_foundation_specialist_fusion():
@@ -208,16 +208,16 @@ def test_foundation_specialist_fusion():
     assert not blended.isnull().any().any()
 ```
 
-- [ ] **Step 2: Verify test passes**
+- [x] **Step 2: Verify test passes**
 
 Run: `.venv/bin/pytest -v tests/test_ensemble.py`  
 Expected: PASS.
 
-- [ ] **Step 3: Package final submission kernel version and push**
+- [x] **Step 3: Package final submission kernel version and push**
 
 Push updated kernel and submit to Kaggle leaderboard.
 
-- [ ] **Step 4: Update `docs/experiments.md` and commit**
+- [x] **Step 4: Update `docs/experiments.md` and commit**
 
 ```bash
 git add src/ensemble.py notebooks/submission/ docs/experiments.md

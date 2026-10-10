@@ -8,19 +8,20 @@ Comprehensive analysis and catalog of the highest-scoring public notebooks on Ka
 
 | Public LB | Title | Author | Kernel Ref | Core Innovation |
 | :---: | :--- | :--- | :--- | :--- |
-| **0.946** | `rsna-knee-d4-public0946` | yamadan96 | `yamadan96/rsna-knee-d4-public0946` | Cleanest 0.946 pipeline; 4-way CoAtNet consensus + Raptor k=94 + DINOv2 |
+| **0.950** | `RSNA_Versia_5` (v5) | Evgen Dvorkin | `evgendvorkin/rsna-versia-5` | **SOTA Apex Fusion:** SOTA 0.949 CoAtNet SWA + 3-Fold 2.5D ConvNeXt MIL Reader with target-calibrated rank fusion |
+| **0.949** | `rsna-knee-0-949-coatnet-stack-blend` | Pilkwang Kim | `goodpjw2008/rsna-knee-0-949-coatnet-stack-blend-lb-0-949` | 60% nartaa 0.949 CoAtNet + 40% 0.943 community stack rank blend |
+| **0.949** | `RSNA Knee 0949 Anatomical Mirror` | Danial Zakaria | `nartaa/rsna-knee-0949-anatomical-mirror` | **Highest scoring single model (0.949):** 384px CoAtNet RMLP-2 SWA with Anatomical Mirror TTA |
+| **0.946** | `rsna-knee-d4-public0946` | yamadan96 | `yamadan96/rsna-knee-d4-public0946` | 4-way CoAtNet consensus + Raptor k=94 + DINOv2 |
 | **0.946** | `rsna-knee-d4-blend` | pjmathematician | `pjmathematician/rsna-knee-d4-blend` | SOTA D4 blend with hardened runtime contract and asset checks |
-| **0.943** | `RSNA_Versia_5` | Evgen Dvorkin | `evgendvorkin/rsna-versia-5` | 4-arm CoAtNet (Global96, RepairV1, ResGated, D4) + RadImageNet |
 | **0.943** | `RSNA Knee Fast 2xT4 Inference` | Jiwei Liu | `jiweiliu/rsna-knee-fast-2xt4-inference` | Dual-GPU T4 parallelization and asynchronous CPU prefetch |
 | **0.942** | `Bend the Knee to Speedy Raptors` | Mattia Angeli | `mattiaangeli/bend-the-knee-to-speedy-raptors-the-original` | Foundational Speedy Raptors architecture (DINO shared prefix + Raptor) |
-| **0.942** | `rsna-knee-speedy947` | Nikolai Leukhin | `kolyaflexcu/rsna-knee-speedy947` | Fully decoupled, documented configuration exposing all fusion weights |
 | **0.940** | `Hybrid Raptor + Meniscus Specialist` | renta.k | `renta0426/rsna-knee-hybrid-raptor-meniscus-specialist` | Discovered Lateral Meniscus 1.00 CoAtNet routing specialization |
 | **0.937** | `Head and Shoulders, Knees and Toes` | prvsiyan | `prvsiyan/head-and-shoulders-knees-and-toes` | Expanded Raptor to 4 slicing arms + global CoAtNet fusion |
 | **0.887** | `RSNA Knee baseline v1` | Pilkwang Kim | `pilkwang/rsna-knee-baseline-v1` | Foundational 2.5D multi-slot pipeline, geometric ordering, NLP report reader |
 
 ---
 
-## 🧬 Architectural Evolution: 0.887 → 0.940 → 0.943 → 0.946
+## 🧬 Architectural Evolution: 0.887 → 0.940 → 0.943 → 0.946 → 0.949 → 0.950
 
 ```
 0.887: Pure DINOv2 small 20-member ensemble
@@ -31,9 +32,13 @@ Comprehensive analysis and catalog of the highest-scoring public notebooks on Ka
                           └── + Shared DINO prefix + 2xT4 GPU concurrency
                                 └── 0.942 (mattiaangeli)
                                       └── + 4-Way CoAtNet Consensus (Global96 + RepairV1) + k_eval=94
-                                            └── 0.943 (evgendvorkin / jiweiliu)
+                                            └── 0.943 (jiweiliu)
                                                   └── + Rank-space D4 consensus blend
                                                         └── 0.946 (yamadan96 / pjmathematician)
+                                                              └── + 384px CoAtNet SWA + Anatomical Mirror TTA
+                                                                    └── 0.949 (nartaa)
+                                                                          └── + 3-Fold 2.5D ConvNeXt MIL Reader
+                                                                                └── 0.950 (evgendvorkin: RSNA_Versia_5)
 ```
 
 ---
@@ -94,6 +99,12 @@ Combines convolutional local feature capture with transformer global self-attent
 2. `d4_depthzone_swa3` (depth-zone aware stochastic weight averaging)
 3. `global96_top3` (global context)
 4. `repairv1_top3`
+
+### Pillar 5: ConvNeXt 2.5D Multi-Window Reader (`goodpjw2008/rsna-knee-2-5d-convnext-reader`)
+- **Origin & Discovery:** Reverse-engineering of top 0.946 public kernels revealed that the jump from 0.943 to 0.946 relies on blending a private 2.5D ConvNeXt reader at ~10% weight.
+- **Pretrained Weights:** Discovered public dataset `goodpjw2008/rsna-knee-2-5d-convnext-reader` containing pre-trained 3-fold weights (`cnxt_v0_fold0.pt`, `cnxt_v0_fold1.pt`, `cnxt_v0_fold2.pt`).
+- **Architecture (`KneeNet`):** ConvNeXt-Tiny 2D backbone extracting features from 3-slice windows, embedded with anatomical slot IDs and normalized z-axis slice positions, processed via a 2-layer `TransformerEncoder` and 12-target attention pooling head.
+- **Ensemble Role:** Provides completely orthogonal, non-overlapping inductive bias to the DINOv2 and CoAtNet consensus.
 
 ---
 

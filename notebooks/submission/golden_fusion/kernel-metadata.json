@@ -26,7 +26,8 @@
     "pilkwang/rsna-knee-llm-labels",
     "prvsiyan/rsna-knee-v52-radimagenet-heads-20260812",
     "pilkwang/rsna-knee-weights",
-    "aleixlopez/rsna-knee-specialist-weights"
+    "aleixlopez/rsna-knee-specialist-weights",
+    "goodpjw2008/rsna-knee-2-5d-convnext-reader"
   ],
   "kernel_sources": [
     "sofiaanjenje/rsna-knee-e11-train",

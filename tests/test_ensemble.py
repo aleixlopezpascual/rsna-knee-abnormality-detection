@@ -8,6 +8,7 @@ from src.ensemble import (
     blend_routed_predictions,
     multi_model_rank_average,
     rank_normalize_predictions,
+    three_way_rank_blend,
 )
 
 
@@ -66,3 +67,24 @@ def test_foundation_specialist_fusion():
     assert len(blended) == 3
     assert not blended.isnull().any().any()
     assert list(blended.columns) == ["StudyInstanceUID"] + list(TARGET_COLS)
+
+
+def test_three_way_rank_blend():
+    studies = ["s1", "s2", "s3"]
+    df_f = pd.DataFrame({"StudyInstanceUID": studies})
+    df_c = pd.DataFrame({"StudyInstanceUID": studies})
+    df_s = pd.DataFrame({"StudyInstanceUID": studies})
+
+    for col in TARGET_COLS:
+        df_f[col] = [0.2, 0.5, 0.8]
+        df_c[col] = [0.1, 0.6, 0.7]
+        df_s[col] = [0.9, 0.3, 0.2]
+
+    blended = three_way_rank_blend(df_f, df_c, df_s)
+    assert len(blended) == 3
+    assert not blended.isnull().any().any()
+    assert list(blended.columns) == ["StudyInstanceUID"] + list(TARGET_COLS)
+    for col in TARGET_COLS:
+        vals = blended[col].to_numpy()
+        assert (vals >= 0.0).all() and (vals <= 1.0).all()
+
