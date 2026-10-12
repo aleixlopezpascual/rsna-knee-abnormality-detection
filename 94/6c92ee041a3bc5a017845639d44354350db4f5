@@ -1,0 +1,33 @@
+docs/experiments.md
+  s_99caf4b929e8dc::t_803247d7d7ad6f 27
+  s_99caf4b929e8dc::t_71c1d9c034d965 26
+  s_99caf4b929e8dc::t_683e9f7070df49 25,29
+  s_99caf4b929e8dc::t_eacf308a2d79e8 28
+  s_99caf4b929e8dc::t_5863df6fb58ae9 37-38
+docs/superpowers/plans/2026-10-01-gold-medal-roadmap.md
+  s_99caf4b929e8dc::t_eee2cc14e28765 226-233
+scripts/build_apex_specialist_notebook.py
+  s_99caf4b929e8dc::t_c5315fa55a34b4 233-234,236-247
+  s_99caf4b929e8dc::t_ca54c87a03c3f7 298-299
+  s_99caf4b929e8dc::t_fd31ade360c89c 54
+scripts/build_probit_superstack_notebook.py
+  s_99caf4b929e8dc::t_0499d6e161a3b4 1-378
+docs/intel/forum_intel.md
+  s_99caf4b929e8dc::t_a0d80d3f648eea 28-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "946c92ee041a3bc5a017845639d44354350db4f5",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
