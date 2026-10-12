@@ -223,3 +223,11 @@ Push updated kernel and submit to Kaggle leaderboard.
 git add src/ensemble.py notebooks/submission/ docs/experiments.md
 git commit -m "feat(ensemble): deploy gold-medal dual-stream foundation-specialist fusion"
 ```
+
+---
+
+## 🏆 Verified Milestones Achieved
+- **0.948 Public LB (Ref: 57019581):** SOTA CoAtNet SWA + 3-Fold 2.5D ConvNeXt + Dual-Fold ASL Specialist (+0.005 gain over prior ceiling).
+- **0.950 Public LB (Ref: 57047082 / 57078027):** Verified SOTA CoAtNet SWA + ConvNeXt baseline and 4-Reader Probit Quantile Superstack.
+- **0.954 Public LB (Ref: 57114576):** Verified Helios 0.954 Apex (CoAtNet-384 SWA 0.70 + OrthoFoundation S6 ConvNeXt 0.30) establishing our new peak anchor in Top Silver/Gold territory.
+- **Complete 5-Fold Specialist Ensemble Finished:** Mean CV Macro-AUC: 0.6060 (Folds 0..4 complete; dataset Version 7 ready).

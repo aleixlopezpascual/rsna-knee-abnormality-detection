@@ -25,6 +25,34 @@
 
 ## High-Value Technical Discussions
 
+### Topic 746792: Reaching 0.949 with one CoAtNet: labels, native crops, and anatomical mirroring (Danial Zakaria / nartaa)
+- **Breakthrough:** Single CoAtNet RMLP-2 model trained on 384x384 full-field with SWA (epochs [14, 11, 12]) scores **0.949 Public LB**.
+- **Inference Pipeline:** Evaluates 94 three-slice windows with finding-specific multiple-instance attention pooling. Native 320-pixel center crop (`[32:352, 32:352]`).
+- **Anatomical Mirror TTA:** Averaging standard view + anatomical left/right mirror:
+  - Sagittal: reverse slice channels (flips slices 0 and 2).
+  - Coronal & Axial: horizontal image width flip.
+  - Average the two probability vectors equally.
+- **Negative Results:**
+  - Width-flip TTA across every imaging plane hurt score (0.940 -> 0.939).
+  - Reducing window density from 94 to 24 dropped score (0.940 -> 0.934).
+  - Shrinking inference crop to 288px dropped score (0.948 -> 0.946).
+- **OAI Controversy & Rules Risk:** Grandmaster Tucker Arrants flagged that external OAI data is access-restricted in several countries (e.g. China, Russia), creating a potential rules violation risk if hosts disqualify OAI-trained checkpoints. **Strategic Mandate:** Keep a dual submission portfolio (Slot 1: OAI-augmented Apex; Slot 2: 100% RSNA-clean).
+
+### Topic 748011: Local CV or Public LB: which one can we trust? (colum2131 / datnt114)
+- **CV Correlation Discovery:**
+  - AUC on the 58 gold studies vs Public LB: **$r = 0.66$** (noisy due to small $N=58$).
+  - AUC on ~4,300 studies with extracted labels vs Public LB: **$r = 0.87$** (strong linear correlation).
+  - Evaluating 5-fold OOF across all 4,407 studies is significantly more reliable than the 58-study gold subset.
+- **Current Top Ceiling:** Competitor `datnt114` reported best private LB at **0.961** with local 5-fold OOF of 0.937.
+
+### Topic 747658: Report vs Ground Truth label discrepancies (Heng Cher Keng)
+- **Label Independence:** Clinical reports and ground-truth contest annotations were created independently. In study `1.2.826.0.1.3680043.8.498.12606657226568558340797193167488111973`, the ground-truth label has `Effusion: 1`, while the medical report explicitly states *"No knee effusion is present."*
+- **Takeaway:** Pure text-based NLP extraction hits a structural glass ceiling. Direct multi-plane MRI visual feature extractors (like our RadImageNet ASL specialist) are mandatory to detect visual abnormalities omitted or discounted by the original reporting radiologist.
+
+### Topic 747553: DINOv3 cannot detect ACL/MCL tears
+- **Transformer Texture Blindness:** Vision transformer patch tokens struggle with fine, sub-centimeter linear structures like ACL/MCL tears and cortical hairline fractures.
+- **Convolutional Advantage:** Modern pure convolutions (ConvNeXt, ResNet-50) and hybrid CoAtNets dramatically outperform transformers on ligament and bone micro-architecture.
+
 ### Topic 735304: Best single-model score
 
 <p>A five-fold ResNet with a resolution of 224px     . 0.954</p>

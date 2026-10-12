@@ -1,0 +1,24 @@
+{
+  "id": "aleixlopez/rsna-knee-probit-superstack-0956",
+  "title": "RSNA Knee Probit Superstack 0956",
+  "code_file": "rsna-knee-probit-superstack.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "goodpjw2008/rsna-knee-2-5d-convnext-reader",
+    "nartaa/rsna-knee-publication-swa-weights-20261007",
+    "aleixlopez/rsna-knee-specialist-weights"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": []
+}
