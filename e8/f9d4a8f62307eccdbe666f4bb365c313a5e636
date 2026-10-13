@@ -1,0 +1,21 @@
+scripts/build_megastack_notebook.py
+  s_99caf4b929e8dc::t_da2a4a8c85938b 1-454
+docs/experiments.md
+  s_99caf4b929e8dc::t_e089dfe82b7151 30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "e8f9d4a8f62307eccdbe666f4bb365c313a5e636",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
