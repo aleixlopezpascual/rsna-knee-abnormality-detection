@@ -74,3 +74,13 @@ $$
 1. **Metric & Schema Verification:** Implement and unit test the 12-target macro ROC-AUC in `src/metrics.py`.
 2. **Dataset Preprocessing Pipeline:** Build a generator in `src/dataset.py` that parses DICOM metadata, selects key slices/slabs per view (Sagittal, Coronal, Axial), and resizes them.
 3. **Fast Baseline Model:** Train a 2.5D ResNet34 / ConvNeXt backbone with multi-label binary cross-entropy loss, producing fold 0 OOF predictions and a verified submission.
+
+---
+
+## 6. SOTA Benchmarks & Official Submissions
+
+- **Current Public Leaderboard Peak:** **0.954 Macro ROC-AUC** (Top Silver / Gold Tier).
+- **Official Dual-Slot Submissions Portfolio:**
+  - **Slot 1 (Max Performance):** `exp-13 Grandmaster Probit Superstack` (Ref: `57119660`, **0.954**): 4-pillar multi-domain fusion combining Helios CoAtNet-384 SWA + OrthoFoundation S6 ConvNeXt (80-98%) + 2.5D ConvNeXt Reader (+0.079 Lateral OA) + complete 5-Fold ASL Specialist (Fracture +0.032) in Latent Gaussian Probit space.
+  - **Slot 2 (Pure SOTA Anchor):** `exp-12 Helios Apex` (Ref: `57114576`, **0.954**): Pure 70/30 CoAtNet-384 SWA + OrthoFoundation S6 ConvNeXt baseline.
+- **5-Fold Specialist Ensemble:** 100% complete across all 4,407 studies (Folds 0..4, Mean CV: **0.6060**; dataset Version 7).

@@ -199,3 +199,10 @@ Twelve binary labels:
 Although efforts have been made to ensure each abnormality is represented in each dataset, the prevalence of abnormalities is not guaranteed to be the same across the training, public leaderboard, and final evaluation datasets. 
 ## DICOM Notes
 Intensities, orientations, and resolutions vary across series and studies. Series come in a mix of transfer syntaxes (uncompressed Explicit VR Little Endian, JPEG Lossless, JPEG 2000, Implicit VR Little Endian). Every DICOM has been stripped to an allowlisted set of 86 metadata tags.
+
+## Current Competitive Standing & Dual-Slot Strategy (October 2026)
+- **Verified Public Leaderboard Peak:** **0.954 Macro ROC-AUC** (Ref: `57114576` and Ref: `57119660`).
+- **Rules Compliance Portfolio (Dual-Slot Strategy):**
+  - **Slot 1 (Grandmaster Performance):** `exp-13 Grandmaster Probit Superstack` (Ref: `57119660`, **0.954**): Fuses CoAtNet-384 SWA + OrthoFoundation S6 ConvNeXt + 2.5D ConvNeXt Reader + 5-Fold ASL Specialist via Latent Gaussian Probit Quantile Transformation.
+  - **Slot 2 (Pure SOTA Anchor):** `exp-12 Helios Apex` (Ref: `57114576`, **0.954**): 70% CoAtNet-384 SWA + 30% OrthoFoundation S6 ConvNeXt.
+  - **Fallback Safety:** Both models carry complete fallback protection to ensure zero submission failures.
