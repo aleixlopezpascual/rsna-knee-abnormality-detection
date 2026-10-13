@@ -1,0 +1,24 @@
+docs/competition-brief.md
+  s_99caf4b929e8dc::t_0336b729723c63 77-86
+docs/intel/overview.md
+  s_99caf4b929e8dc::t_6c6fedd3716457 202-208
+README.md
+  s_99caf4b929e8dc::t_8163cb0c7308eb 252,256
+  s_99caf4b929e8dc::t_304a0f197114fb 6-7,10-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "f6f1afe410d2de19fa3aa2c8dae9daad23648fe5",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
