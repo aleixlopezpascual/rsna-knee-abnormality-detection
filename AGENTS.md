@@ -87,18 +87,16 @@ Our repository diverges from naive public baselines through domain-informed medi
 - **Train/Test Modality Asymmetry:** Free-text radiology reports are provided in training, but **test data contains NO text reports** (only raw DICOMs). Text encoders (e.g. DeBERTa/LLM readers) may only be used as offline pseudo-labelers or distillation teachers; the inference graph must strictly accept MRI DICOMs.
 - **Percentile Rank Calibration:** ROC-AUC measures relative rank ordering. Convert raw prediction probabilities to fractional percentiles (`pd.Series.rank(pct=True)`) before ensembling distinct models or generating final submissions.
 
-### G. The 0.946 SOTA Frontier: 4-Pillar Multi-Family Fusion
-The top-performing public solutions (0.942 → 0.946) combine four complementary model families:
-1. **DINOv2 with Shared Prefix Acceleration:** 20 members sharing the first 6 transformer layers (evaluated once per study, saving 80% compute), combined with 5-fold A5 cross-attention heads.
-2. **Medical Pretraining with RadImageNet (ResNet-50):** Features trained on 1.3M medical images (`marwanmath/resnet-50-radimagenet-marwan`) with dual-GPU persistent replicas and 88-feature gated calibrator.
-3. **Raptor Volumetric Multi-Span Slicing (4 Arms):** Evaluates 94 sampled window slices per study across `maxspan-v5` (0.60), `native384dense-v10` (0.10), `maxspan-v5-reverse` (0.10), and `native384-v8` (0.20).
-4. **CoAtNet 4-Way Multi-Scale Hybrid Consensus:** Blends four CoAtNet models (`resgated_top3`, `d4_depthzone_swa3`, `global96_top3`, `repairv1_top3`).
-5. **Target-Specific Clinical Routing Matrix:**
-   - `Lateral Meniscus`: 100% CoAtNet (CoAtNet dramatically dominates here; transformers fail).
-   - `Medial Meniscus`: 80% CoAtNet / 20% Transformer stack.
-   - `ACL`, `Lateral OA`, `Fracture`: 75% CoAtNet / 25% Transformer stack.
-   - Default findings: 60% CoAtNet / 40% Transformer stack.
-   - Always fuse in rank space (`rank(method="average", pct=True)`).
+### G. The 0.954 SOTA Frontier: 4-Pillar Multi-Domain Probit Superstack
+The top-performing verified submissions in this repository (**0.954 Macro ROC-AUC**, Ref: `57114576` & `57119660`) combine four complementary medical vision paradigms:
+1. **CoAtNet-384 SWA (Global Anatomical Anchor):** Evaluates native 384×384 full-field DICOM volumes across 94 slice windows with **Anatomical Mirror TTA** (`nartaa/rsna-knee-publication-swa-weights-20261007`), dominating on whole-knee pathologies (`Effusion`, `Synovitis`, `Lateral Meniscus`).
+2. **OrthoFoundation S6 ConvNeXt (Local Structural Core):** Pre-trained on clinical musculoskeletal MRI scans (`heliosli/rsna-orthofoundation-fold0-epoch7-20261004` + `heliosli/rsna-knee-compact-v1`) with 4-fold compact multi-plane slice aggregation.
+3. **2.5D ConvNeXt-Small MIL Reader (Specialized Target Lift):** Addresses CoAtNet's known blindness on `Lateral OA` (ConvNeXt achieves **0.8549 vs 0.7756**, a **+0.0793 AUC lift**!) and `Baker's Cyst` (ConvNeXt **0.984 vs 0.940**, **+0.044 AUC lift**).
+4. **Complete 5-Fold 384px ASL Specialist Ensemble:** 100% complete across all 4,407 studies (Mean CV: **0.6060**; dataset Version 7). Injects surgical 3%–6% tie-breaking on `Fracture` (+0.032 AUC proven) and `Contusion` (0.6216 AUC).
+5. **Latent Gaussian Probit Quantile Transformation:** Rather than linear rank averaging (which compresses probability tails near 0.0 and 1.0), maps percentiles to latent standard normal space ($z = \Phi^{-1}(p)$ via `ndtri`), performs surgical weighted fusion, and maps back ($p = \Phi(z)$ via `ndtr`).
+6. **Dual-Slot Rules-Hedge Portfolio:**
+   - **Slot 1:** `exp-13 Grandmaster Probit Superstack` (Ref: `57119660`, **0.954**)
+   - **Slot 2:** `exp-12 Helios Apex` (Ref: `57114576`, **0.954**)
 
 ### H. Compute Governance & Zero-Training Exhaustion Protocol
 - **Local Machine (Apple M2 Pro 32GB):** Reserved for rapid modular library development, unit testing (pytest in 4s), report NLP extraction, ensembling experiments, and rank calibration.
@@ -129,20 +127,32 @@ rsna-knee-abnormality-detection/
 │   ├── test_series.csv          # Test series descriptors
 │   ├── test_series/             # Test DICOM series
 │   └── sample_submission.csv    # Official submission format
+├── models/                      # Pretrained and trained model checkpoints (gitignored)
+│   └── specialist_checkpoints/  # All 5 fold checkpoints (specialist_rad_fold0..4.pth)
 ├── src/                         # Core reusable library
 │   ├── __init__.py
 │   ├── config.py                # Paths, constants, seeds, target column definitions
 │   ├── metrics.py               # Competition ROC-AUC evaluation and scoring
 │   ├── dataset.py               # DICOM parsing, geometric ordering, 2.5D slab caching
+│   ├── ensemble.py              # Three-way rank blending & Probit quantile fusion
+│   ├── optimize_routing.py      # Bounded Nelder-Mead routing weight optimizer
+│   ├── report_reader.py         # Multilingual rule-based clinical NLP extractor
+│   ├── landmark.py              # Joint center physical coordinate locator
 │   ├── models/                  # Neural network modules
 │   │   ├── __init__.py
-│   │   ├── backbones.py         # 2D/2.5D vision backbones (timm, DINOv2, ConvNeXt)
+│   │   ├── backbones.py         # Vision backbones (timm, DINOv2, ConvNeXt, RadImageNet)
 │   │   ├── slot_head.py         # Slot-attention aggregator with anatomical prior
 │   │   └── model.py             # End-to-end multi-slot knee classifier
 │   ├── train.py                 # Multi-fold training CLI with AMP, CosineAnnealing, W&B
 │   └── infer.py                 # Kaggle inference runner and submission generator
-├── notebooks/                   # Exploratory and public reference kernels
-│   └── public_baselines/        # Harvested high-scoring public notebooks
+├── notebooks/                   # Submission kernels & training notebooks
+│   ├── public_baselines/        # Reference community baseline notebooks
+│   ├── submission/              # Verified competition submission packages
+│   │   ├── grandmaster_superstack_0956/  # 0.954 Grandmaster Probit Superstack (Ref: 57119660)
+│   │   ├── helios_0954_apex/             # 0.954 Helios Apex pipeline (Ref: 57114576)
+│   │   ├── probit_superstack/            # 0.950 4-Reader Probit Superstack (Ref: 57078027)
+│   │   └── apex_0950_sota/               # 0.950 Pure Apex Baseline (Ref: 57047082)
+│   └── train_specialist/        # Complete 5-fold training kernels (Folds 0..4)
 ├── oof/                         # Out-of-fold validation predictions (Parquet/CSV)
 ├── submissions/                 # Generated competition submission files
 ├── docs/                        # Architectural records, intelligence, and logs
@@ -150,11 +160,18 @@ rsna-knee-abnormality-detection/
 │   ├── experiments.md           # Master experiment ledger (CV scores & parameters)
 │   └── intel/                   # Forum intel, data specs, and top notebook summaries
 ├── scripts/                     # Operational automation scripts
-│   └── setup_symlinks.sh        # Symlink synchronization script
-└── tests/                       # Pytest verification suite
+│   ├── build_grandmaster_superstack_notebook.py  # Builds 0.956+ superstack
+│   ├── build_complete_specialist_notebook.py     # Parameterized 5-fold generator
+│   └── setup_symlinks.sh                         # Symlink synchronization script
+└── tests/                       # Pytest verification suite (37 passing unit tests)
     ├── test_metrics.py          # Metric accuracy and single-class edge cases
     ├── test_dataset.py          # Geometry ordering and slab extraction
-    └── test_models.py           # Model forward shapes, slot masking, backward pass
+    ├── test_models.py           # Model forward shapes, slot masking, backward pass
+    ├── test_ensemble.py        # Multi-model rank averaging & 3-way routing fusion
+    ├── test_landmark.py        # Physical joint-center locator & slab extraction
+    ├── test_loss.py            # Asymmetric Focal Loss & inverse frequency weighting
+    ├── test_optimize_routing.py # Routing optimizer validation
+    └── test_report_reader.py   # Multilingual report extractor rules & leakage tests
 ```
 
 ---
