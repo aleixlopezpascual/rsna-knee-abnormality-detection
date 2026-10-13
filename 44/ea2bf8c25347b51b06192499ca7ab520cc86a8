@@ -1,0 +1,19 @@
+AGENTS.md
+  s_99caf4b929e8dc::t_605577d0c047ef 90-99,130-131,137-140,143,148-155,163-166,169-174
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "44ea2bf8c25347b51b06192499ca7ab520cc86a8",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
