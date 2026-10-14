@@ -29,6 +29,39 @@ def validate_submission_df(df: pd.DataFrame, test_df: pd.DataFrame) -> None:
         )
 
 
+def apply_anatomical_mirror_tta(
+    imgs: torch.Tensor,
+    planes: list[str] | tuple[str, ...] | None = None,
+) -> torch.Tensor:
+    """Apply left/right anatomical mirror transform for test-time augmentation (TTA).
+
+    Proven in nartaa (0.949) to boost single-model performance without parameter increases:
+    - Sagittal views: Reverses the slice channel order (dim 2).
+    - Coronal/Axial views: Flips image width horizontally (dim -1).
+
+    Args:
+        imgs: Input tensor of shape (Batch, Slots, Channels, H, W) or (Batch, Channels, H, W).
+        planes: Optional sequence of anatomical planes for each slot.
+
+    Returns:
+        Mirrored tensor with identical shape and dtype.
+    """
+    if imgs.ndim == 5:
+        mirrored = imgs.clone()
+        if planes is not None:
+            for s_idx, plane in enumerate(planes):
+                if plane.lower() == "sagittal":
+                    mirrored[:, s_idx] = torch.flip(mirrored[:, s_idx], dims=[1])
+                else:
+                    mirrored[:, s_idx] = torch.flip(mirrored[:, s_idx], dims=[-1])
+        else:
+            mirrored = torch.flip(mirrored, dims=[-1])
+        return mirrored
+    elif imgs.ndim == 4:
+        return torch.flip(imgs, dims=[-1])
+    return imgs
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate RSNA Knee Submissions")
     parser.add_argument("--model", type=str, default="resnet34", help="Backbone architecture")
@@ -38,6 +71,7 @@ def main() -> None:
     parser.add_argument("--batch-size", type=int, default=8, help="Batch size")
     parser.add_argument("--output", type=str, default=str(SUBMISSION_DIR / "submission.csv"))
     parser.add_argument("--rank-pct", action="store_true", default=True, help="Apply percentile ranking")
+    parser.add_argument("--enable-tta", action="store_true", default=False, help="Enable anatomical mirror TTA")
 
     args = parser.parse_args()
 
@@ -77,8 +111,15 @@ def main() -> None:
             imgs = batch["imgs"].to(device)
             mask = batch["mask"].to(device)
             logits = model(imgs, mask)
-            preds = torch.sigmoid(logits).cpu().numpy()
-            all_preds.append(preds)
+            preds = torch.sigmoid(logits)
+
+            if args.enable_tta:
+                mirrored_imgs = apply_anatomical_mirror_tta(imgs)
+                mirrored_logits = model(mirrored_imgs, mask)
+                mirrored_preds = torch.sigmoid(mirrored_logits)
+                preds = 0.5 * (preds + mirrored_preds)
+
+            all_preds.append(preds.cpu().numpy())
 
     preds_arr = np.vstack(all_preds) if all_preds else np.full((len(test_df), len(TARGET_COLS)), 0.5)
 

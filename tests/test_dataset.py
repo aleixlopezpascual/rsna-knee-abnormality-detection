@@ -122,3 +122,26 @@ def test_knee_multi_slot_dataset():
     assert item["mask"][1:].sum() == 0.0
     assert item["targets"].shape == (len(TARGET_COLS),)
     assert item["weights"].shape == (len(TARGET_COLS),)
+
+
+def test_apply_anatomical_mirror_tta():
+    from src.infer import apply_anatomical_mirror_tta
+
+    # Create dummy multi-slot tensor (B=2, S=3, C=3, H=10, W=10)
+    imgs = torch.arange(2 * 3 * 3 * 10 * 10, dtype=torch.float32).view(2, 3, 3, 10, 10)
+    planes = ["Sagittal", "Coronal", "Axial"]
+
+    mirrored = apply_anatomical_mirror_tta(imgs, planes=planes)
+    assert mirrored.shape == imgs.shape
+
+    # Sagittal (slot 0): slice order reversed along channel dimension (C=3)
+    assert torch.allclose(mirrored[:, 0, 0], imgs[:, 0, 2])
+    assert torch.allclose(mirrored[:, 0, 1], imgs[:, 0, 1])
+    assert torch.allclose(mirrored[:, 0, 2], imgs[:, 0, 0])
+
+    # Coronal (slot 1): horizontal flip along width dimension (dim -1)
+    assert torch.allclose(mirrored[:, 1, :, :, 0], imgs[:, 1, :, :, -1])
+
+    # Axial (slot 2): horizontal flip along width dimension (dim -1)
+    assert torch.allclose(mirrored[:, 2, :, :, 0], imgs[:, 2, :, :, -1])
+

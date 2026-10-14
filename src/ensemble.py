@@ -185,3 +185,74 @@ def three_way_rank_blend(
     blended = rank_normalize_predictions(blended, target_cols)
     return blended.reset_index()
 
+
+def probit_quantile_fusion(
+    models_dict: dict[str, pd.DataFrame],
+    target_weights: dict[str, dict[str, float]],
+    target_cols: Sequence[str] = TARGET_COLS,
+    id_col: str = "StudyInstanceUID",
+) -> pd.DataFrame:
+    """Fuse multiple model predictions in Latent Gaussian space via Probit Quantile Normal Transformation.
+
+    Rather than linear rank averaging (which compresses probability tails near 0.0 and 1.0),
+    this transforms fractional percentiles into standard normal quantiles:
+        z = Φ⁻¹(p) = ndtri(p)
+    combines them with target-specific clinical weights:
+        z_fused = Σ w_i * z_i
+    and maps back to continuous probabilities:
+        p_fused = Φ(z_fused) = ndtr(z_fused)
+
+    Args:
+        models_dict: Mapping from model_name -> DataFrame with [id_col] + target_cols.
+        target_weights: Mapping from target_col -> {model_name: weight}.
+        target_cols: List of target column names.
+        id_col: Study identifier column name.
+
+    Returns:
+        Rank-normalized DataFrame with columns [id_col] + target_cols.
+    """
+    from scipy.special import ndtr, ndtri
+
+    if not models_dict:
+        raise ValueError("models_dict cannot be empty")
+
+    first_name = next(iter(models_dict))
+    base_df = models_dict[first_name].set_index(id_col)
+    n = len(base_df)
+
+    if n <= 1:
+        # Fallback for single study: return first model
+        return models_dict[first_name].copy()
+
+    # Convert each model's predictions to fractional percentiles and then to latent normal z-scores
+    z_scores: dict[str, pd.DataFrame] = {}
+    for name, df in models_dict.items():
+        aligned = df.set_index(id_col).reindex(base_df.index)
+        ranks = aligned[list(target_cols)].rank(method="average", ascending=True)
+        p = ((ranks - 0.5) / n).clip(1e-6, 1.0 - 1e-6)
+        z_scores[name] = p.apply(ndtri)
+
+    fused_z = pd.DataFrame(index=base_df.index)
+    for col in target_cols:
+        col_weights = target_weights.get(col, {})
+        total_w = sum(float(col_weights.get(name, 1.0)) for name in z_scores)
+        if total_w <= 0.0:
+            total_w = float(len(z_scores))
+            col_weights = {name: 1.0 for name in z_scores}
+
+        z_col = np.zeros(n, dtype=np.float64)
+        for name, z_df in z_scores.items():
+            w = float(col_weights.get(name, 1.0)) / total_w
+            z_col += w * z_df[col].to_numpy(dtype=np.float64)
+        fused_z[col] = z_col
+
+    fused_p = fused_z.apply(ndtr)
+    final_df = pd.DataFrame(index=base_df.index)
+    for col in target_cols:
+        final_df[col] = (
+            pd.Series(fused_p[col].values).rank(method="average", pct=True).to_numpy()
+        )
+
+    return final_df.reset_index()
+
+
