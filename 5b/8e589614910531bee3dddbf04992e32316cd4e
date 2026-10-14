@@ -1,0 +1,27 @@
+src/ensemble.py
+  s_99caf4b929e8dc::t_744a955b6bcd4e 188-258
+src/infer.py
+  s_99caf4b929e8dc::t_9eec027b3ee970 32-64,74
+  s_99caf4b929e8dc::t_11643c1a6342ff 114-122
+tests/test_ensemble.py
+  s_99caf4b929e8dc::t_0facb1ca2110c5 10
+  s_99caf4b929e8dc::t_c5961c8026ce78 92-116
+tests/test_dataset.py
+  s_99caf4b929e8dc::t_8d54e31ed91cf4 125-147
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "5b8e589614910531bee3dddbf04992e32316cd4e",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
