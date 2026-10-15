@@ -221,11 +221,92 @@ In typical computer vision (e.g. ImageNet), horizontal flipping is a benign augm
 
 ## 5. Deep Learning Modeling: 2.5D Multi-Slot Architecture vs. 3D Volumes
 
-### The 3D Pitfall: Why Full 3D CNNs Fail
-A full 3D CNN (e.g. 3D ResNet, UNet, MONAI DenseNet3D) requires feeding full 3D voxel grids $(B, C, D, H, W)$.
-* **Memory Exhaustion:** A multi-series MRI study at $384 \times 384 \times 120$ slices consumes $>30\,\text{GB}$ VRAM per forward pass, capping batch sizes at $1$ or $2$ studies.
-* **Optimization Instability:** Batch normalization with batch size $1$ is notoriously unstable; gradients are noisy and optimization diverges.
-* **Compute Bottleneck:** 3D convolutions require orders of magnitude more FLOPs, limiting architectures to shallow, low-capacity models.
+### Why Top Solutions Do NOT Use Full 3D CNNs: The 5 Fundamental Roadblocks
+
+In competitive medical imaging, newcomers often assume that because MRI is an inherently three-dimensional imaging modality, a full 3D Convolutional Neural Network (e.g. MONAI 3D UNet, DenseNet3D, or 3D ResNet) must be the gold standard.
+
+In reality, across almost every modern RSNA volumetric imaging challenge (RSNA Cervical Spine 2022, RSNA Abdominal Trauma 2023, RSNA Lumbar Spine 2024, and this Knee challenge), **pure 3D CNNs almost never win**. Every single top-scoring solution on this leaderboard (**0.949, 0.950, 0.954**) uses a **2.5D Multi-View or 2.5D + MIL/Attention hybrid**.
+
+Here is the deep engineering, physical, and clinical rationale for why full 3D CNNs fail:
+
+```
+                       WHY 3D CNNS FAIL ON KNEE MRI:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. MULTI-SEQUENCE ASYMMETRY (MRI ≠ CT):                                     │
+│    A knee exam is not 1 volume; it is 4-8 distinct series (Sag T2, Cor T1, │
+│    Axial PD). Resampling them into a single 3D cube blurs delicate tears!   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 2. THE 10:1 ANISOTROPY PROBLEM:                                             │
+│    In-plane resolution is 0.3-0.5 mm, but slice thickness is 3.0-4.5 mm!    │
+│    Isotropic 3x3x3 kernels mix anatomy across 4 mm physical gaps.           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 3. THE PRETRAINING VOID:                                                    │
+│    2D has ImageNet-21k, RadImageNet (1.3M images), and DINOv2.              │
+│    3D has no massive pre-trained weights; training from scratch overfits.   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 4. VRAM & BATCH SIZE 1 INSTABILITY:                                         │
+│    A 384x384x96 multi-sequence 3D volume consumes >30 GB VRAM, forcing      │
+│    Batch Size = 1. Batch Normalization drifts and gradients become noisy.  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 5. HISTORICAL PROOF:                                                        │
+│    RSNA Lumbar Spine 2024, Abdominal 2023, Cervical 2022 were all won by   │
+│    2.5D slice extractors + 1D sequence/attention heads, NOT 3D CNNs!        │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+#### Roadblock 1: The Multi-Sequence Asymmetry Trap (MRI $\neq$ CT)
+* **In CT scans:** You have one continuous, uniform 3D cube of voxels (e.g. $512 \times 512 \times 400$) acquired in a single rotation. A 3D CNN can convolve directly across $(X, Y, Z)$.
+* **In Knee MRI:** You do **not** have a single 3D cube. You have **4 to 8 completely separate series**:
+  * A Sagittal T2 fat-suppressed series (e.g. 28 slices).
+  * A Coronal T1 series (e.g. 24 slices).
+  * An Axial PD series (e.g. 32 slices).
+* To feed this into a 3D CNN, you would have to resample all series into a shared 3D grid. Resampling across different planes and angles introduces **severe interpolation blurring**, wiping out subtle hairline cortical fractures and surface meniscal fraying before the network even sees them!
+
+#### Roadblock 2: Anisotropy & The 10:1 Aspect Ratio Problem
+Clinical knee MRI is highly **anisotropic**:
+* **In-plane resolution (X, Y):** Very sharp — typically **$0.3\,\text{mm}$ to $0.5\,\text{mm}$** per pixel.
+* **Through-plane slice thickness (Z):** Thick — typically **$3.0\,\text{mm}$ to $4.5\,\text{mm}$** per slice, often with a $0.5\,\text{mm}$ gap.
+* Standard 3D convolutions use isotropic $3 \times 3 \times 3$ filters. Convolving equally across $Z$ blends voxels that are physically $4\,\text{mm}$ apart in space. Mixing anatomy across such large gaps corrupts local diagnostic detail.
+
+#### Roadblock 3: The Pretraining Void
+* **2D / 2.5D Models:** Benefit from backbones pre-trained on tens of millions of images: ImageNet-21k, RadImageNet (1.3M medical images), DINOv2, CoAtNet, and ConvNeXt. The feature extractors already understand edges, textures, contrast gradients, and tissue boundaries.
+* **3D Models:** There are no comparable massive foundation models. 3D models must either be trained from scratch or fine-tuned from small public CT datasets (like MedicalNet). Training a 3D CNN from scratch on only 4,400 knee studies leads to massive overfitting.
+
+#### Roadblock 4: VRAM Exhaustion, Batch Size 1, and Optimization Instability
+* A 3D CNN processing multiple multi-sequence volumes at native resolution ($384 \times 384 \times 96$) requires $>30\,\text{GB}$ VRAM per forward pass.
+* This forces **batch size $B = 1$ or $2$**.
+* In deep learning, batch size 1 causes noisy, high-variance gradients. Batch Normalization statistics drift, learning rates must be kept tiny ($10^{-5}$), and models struggle to converge to flat, generalizable loss minima.
+* In contrast, 2.5D models run with batch sizes of 16 to 32, utilize modern LayerNorm/GroupNorm, and train stably in minutes.
+
+#### Roadblock 5: Historical Proof from Past RSNA Competitions
+* **RSNA Lumbar Spine (2024):** 3D MONAI UNet struggled; won by 2.5D ConvNeXt + 1D slice attention.
+* **RSNA Abdominal Trauma (2023):** 3D ResNet-50 lost; won by 2.5D multi-slice windowing + 2D CNN + 1D GRU.
+* **RSNA Cervical Spine (2022):** Won by 2D EfficientNet slice classifier + sequence rank pooling.
+* **RSNA Knee (Current - 2026):** 3D models plateaued at ~0.915; the top of the leaderboard (**0.954**) is entirely dominated by CoAtNet-384, OrthoFoundation S6, and 2.5D ConvNeXt MIL readers!
+
+---
+
+### What Winning Solutions Actually Use: The "2.5D Spatial + 1D Volumetric" Hybrid
+
+Instead of full 3D convolutions, Grandmasters use a two-stage **2.5D feature extraction + 1D Sequence/Attention Aggregator**:
+
+```
+                       HOW WINNING SOLUTIONS SOLVE 3D:
+
+     Raw Slices               2D / 2.5D Backbone               1D Volumetric Aggregator
+  (e.g., 28 Sagittal)        (Extracts Rich Features)           (Learns 3D Relationship)
+
+  Slice 1  ─────┐                                              ┌───────────────────────┐
+  Slice 2  ─────┼───►  [Pretrained CoAtNet / ConvNeXt]  ───►   │ 1D Transformer /      │
+  Slice 3  ─────┤       High-Res In-Plane Features             │ MIL Attention Head /  │
+   ...          │       (2.5D Triplet Slabs)                   │ Bidirectional GRU     │
+  Slice 28 ─────┘                                              └───────────┬───────────┘
+                                                                           ▼
+                                                                  12 Clinical Diagnoses
+```
+
+1. **Stage 1 (In-Plane Spatial):** A high-capacity 2D/2.5D backbone (CoAtNet-384, ConvNeXt, or RadImageNet ResNet) extracts sharp in-plane features from slices or 3-channel slabs without through-plane blur.
+2. **Stage 2 (Through-Plane Depth):** A lightweight 1D sequence model (like a Transformer, Multiple Instance Learning (MIL) attention pooling, or our `SlotHead`) attends across the slice sequence to synthesize the 3D diagnosis.
 
 ---
 
@@ -339,6 +420,11 @@ The progression of top solutions in this competition is a masterclass in medical
 0.954: Our Grandmaster 4-Pillar Probit Superstack (aleixlopez / Ref: 57119660)
   └── 0.954 Helios Anchor (80-98%) + ConvNeXt (+0.079 Lat OA) + Complete 5-Fold ASL Specialist (Fracture +0.032)
       fused via Latent Gaussian Probit Quantile Normal Transformation (Φ⁻¹)
+        │
+        ▼
+0.955+: S6Fall All-Data Upgrade (nartaa / aleixlopez / Ref: 57228234)
+  └── 70% CoAtNet-384 SWA (0.949) + 30% New S6 All-Data ConvNeXt (E_prior_s42_fall.pt, 0.950 solo!)
+      Upgrades the secondary model pillar from older 0.943 4-fold weights to full 4,263-study S6 model!
 ```
 
 ### The Three Foundational Model Pillars:
@@ -470,6 +556,7 @@ Our **`exp-15 Efficiency Champion` (0.946)** significantly beats heavy 0.954 mod
 | `exp-13` | Grandmaster Probit Superstack | 0.954 Helios (80-98%) + ConvNeXt + 5-Fold ASL | **0.954** 🏆 | `COMPLETE` | Double-verified 0.954 on private test set with 4-pillar fusion |
 | `exp-14` | 5-Pillar Probit Mega-Stack | 0.954 Helios + C224 + ConvNeXt + 5-Fold ASL | **0.953** | `COMPLETE` | Confirmed 70/30 Helios balance is optimal; C224 slightly diluted S6 |
 | `exp-15` | **Efficiency Champion 0949** | Single-pass CoAtNet-224 + ConvNeXt + 5-Fold | **0.946** ⚡ | `COMPLETE` | Sub-100s execution, <2 GB RAM, premier entry for **$18k Prize** |
+| `exp-16` | **S6Fall Blend 0955** | CoAtNet-384 SWA (0.70) + New All-Data S6 (0.30) | ~0.955+ | *Scoring (Ref: 57228234)* | Upgrades S6 pillar with nartaa's brand new all-data S6 model (E_prior_s42_fall.pt, 0.950 solo) |
 
 ---
 

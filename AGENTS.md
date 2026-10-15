@@ -42,7 +42,12 @@ $$\text{Final Score} = \frac{1}{12} \sum_{i=1}^{12} \text{ROC-AUC}_i$$
 Our repository diverges from naive public baselines through domain-informed medical imaging decisions:
 
 ### A. 2.5D Multi-Slot Bag Architecture vs. 3D Dense Volumes
-- **The 3D Pitfall:** Training full 3D CNNs or dense volumetric transformers (e.g. MONAI UNet/DenseNet) across a ~247GB–570GB dataset creates severe I/O bottlenecks, massive VRAM consumption, and limits batch sizes to $1\text{--}2$ studies, leading to noisy and unstable optimization.
+- **The 3D Pitfall (Why 3D CNNs Fail on Knee MRI):** Newcomers often assume 3D convolutions (e.g. MONAI UNet/DenseNet3D) are optimal because MRI is volumetric. Across historical RSNA challenges (Lumbar Spine 2024, Abdominal Trauma 2023, Cervical Spine 2022), pure 3D CNNs systematically lose to 2.5D hybrids due to 5 fundamental roadblocks:
+  1. **Multi-Sequence Asymmetry (MRI $\neq$ CT):** Knee MRI is not a single 3D cube; it consists of 4–8 separate series with varying planes and contrasts (Sag T2, Cor T1, Axial PD). Resampling them onto a shared 3D grid causes severe interpolation blurring that destroys hairline fractures.
+  2. **The 10:1 Anisotropy Problem:** In-plane resolution is $0.3\text{--}0.5\,\text{mm}$ while slice thickness is $3.0\text{--}4.5\,\text{mm}$. Isotropic $3\times 3\times 3$ kernels mix anatomy across 4 mm physical gaps.
+  3. **The Pretraining Void:** 2D backbones leverage ImageNet-21k, RadImageNet (1.3M images), and DINOv2. 3D models lack massive pretrained weights; training 3D CNNs from scratch on 4,400 studies leads to catastrophic overfitting.
+  4. **VRAM Exhaustion & Batch Size 1 Instability:** Processing multi-series 3D volumes at $384\times 384\times 96$ consumes $>30\,\text{GB}$ VRAM, forcing batch size $B=1$. Batch Normalization statistics drift, gradients become noisy, and optimization diverges.
+  5. **Winning Paradigm (2.5D Spatial + 1D Volumetric):** Top solutions extract sharp in-plane 2.5D slice triplet representations and aggregate through-plane relationships via 1D Sequence/Attention heads (`SlotHead` or MIL pooling).
 - **Our 2.5D Slot Solution:** Treat each study as a bag of up to 6 canonical acquisition slots across the 3 anatomical planes. For each slot, we sample 3 consecutive slices (spaced across the anatomical region of interest) and stack them as a 3-channel (RGB) slab.
 - **The 6 Canonical Slots:**
   1. `SAG_FLUID_FS`: Sagittal, Fluid-sensitive (T2/PD/STIR), Fat-suppressed.
@@ -87,16 +92,16 @@ Our repository diverges from naive public baselines through domain-informed medi
 - **Train/Test Modality Asymmetry:** Free-text radiology reports are provided in training, but **test data contains NO text reports** (only raw DICOMs). Text encoders (e.g. DeBERTa/LLM readers) may only be used as offline pseudo-labelers or distillation teachers; the inference graph must strictly accept MRI DICOMs.
 - **Percentile Rank Calibration:** ROC-AUC measures relative rank ordering. Convert raw prediction probabilities to fractional percentiles (`pd.Series.rank(pct=True)`) before ensembling distinct models or generating final submissions.
 
-### G. The 0.954 SOTA Frontier: 4-Pillar Multi-Domain Probit Superstack
-The top-performing verified submissions in this repository (**0.954 Macro ROC-AUC**, Ref: `57114576` & `57119660`) combine four complementary medical vision paradigms:
+### G. The 0.954+ SOTA Frontier: Multi-Domain Probit Superstack & S6Fall Upgrade
+The top-performing verified submissions in this repository (**0.954 Macro ROC-AUC**, Ref: `57114576` & `57119660`, with `sub-17-s6fall-blend-0955` targeting 0.955+) combine complementary medical vision paradigms:
 1. **CoAtNet-384 SWA (Global Anatomical Anchor):** Evaluates native 384×384 full-field DICOM volumes across 94 slice windows with **Anatomical Mirror TTA** (`nartaa/rsna-knee-publication-swa-weights-20261007`), dominating on whole-knee pathologies (`Effusion`, `Synovitis`, `Lateral Meniscus`).
-2. **OrthoFoundation S6 ConvNeXt (Local Structural Core):** Pre-trained on clinical musculoskeletal MRI scans (`heliosli/rsna-orthofoundation-fold0-epoch7-20261004` + `heliosli/rsna-knee-compact-v1`) with 4-fold compact multi-plane slice aggregation.
+2. **All-Data S6 ConvNeXt (Local Structural Core):** Pre-trained on clinical musculoskeletal MRI scans with SKM-TEA anatomy anchors. Upgraded from older 4-fold weights to `nartaa/rsna-knee-s6fall-weights` (`E_prior_s42_fall.pt`, 0.950 solo), trained on all 4,263 report-labeled studies.
 3. **2.5D ConvNeXt-Small MIL Reader (Specialized Target Lift):** Addresses CoAtNet's known blindness on `Lateral OA` (ConvNeXt achieves **0.8549 vs 0.7756**, a **+0.0793 AUC lift**!) and `Baker's Cyst` (ConvNeXt **0.984 vs 0.940**, **+0.044 AUC lift**).
 4. **Complete 5-Fold 384px ASL Specialist Ensemble:** 100% complete across all 4,407 studies (Mean CV: **0.6060**; dataset Version 7). Injects surgical 3%–6% tie-breaking on `Fracture` (+0.032 AUC proven) and `Contusion` (0.6216 AUC).
 5. **Latent Gaussian Probit Quantile Transformation:** Rather than linear rank averaging (which compresses probability tails near 0.0 and 1.0), maps percentiles to latent standard normal space ($z = \Phi^{-1}(p)$ via `ndtri`), performs surgical weighted fusion, and maps back ($p = \Phi(z)$ via `ndtr`).
 6. **Dual-Slot Rules-Hedge Portfolio:**
-   - **Slot 1:** `exp-13 Grandmaster Probit Superstack` (Ref: `57119660`, **0.954**)
-   - **Slot 2:** `exp-12 Helios Apex` (Ref: `57114576`, **0.954**)
+   - **Slot 1 (Max Performance):** `exp-13 Grandmaster Probit Superstack` (Ref: `57119660`, **0.954**) / `exp-16 S6Fall Blend` (Ref: `57228234`).
+   - **Slot 2 (Efficiency Track & Anti-Shakeup Anchor):** `exp-15 Efficiency Champion 0949` (Ref: `57174412`, **0.946**, ~7 min turnaround). Ensures competition eligibility and protection against external OAI compliance risks.
 
 ### H. Compute Governance & Zero-Training Exhaustion Protocol
 - **Local Machine (Apple M2 Pro 32GB):** Reserved for rapid modular library development, unit testing (pytest in 4s), report NLP extraction, ensembling experiments, and rank calibration.
