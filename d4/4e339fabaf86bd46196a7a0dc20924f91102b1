@@ -1,0 +1,19 @@
+docs/competition_masterclass.md
+  s_99caf4b929e8dc::t_51562cfc843180 1-508
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "d44e339fabaf86bd46196a7a0dc20924f91102b1",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
