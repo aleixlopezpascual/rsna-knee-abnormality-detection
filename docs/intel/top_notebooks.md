@@ -126,3 +126,13 @@ coatnet_w = {
 
 - **Lateral Meniscus Specialization:** Routing `Lateral Meniscus` exclusively to CoAtNet (`1.00`) provided a direct $+0.003$ public LB boost because CNN local receptive fields detect radial and horizontal tears far more cleanly than attention tokens.
 - **Percentile Rank Fusion:** Blending is strictly performed in rank space (`rank(method="average", pct=True)`), neutralizing score distribution differences between model families.
+
+---
+
+### Pillar 6: S6Fall All-Data ConvNeXt (`nartaa/rsna-knee-s6fall-weights`, Oct 14, 2026)
+- **Origin & Breakthrough:** Published by Danial Zakaria (`nartaa`) in Topic #749359.
+- **Model Checkpoint:** `E_prior_s42_fall.pt` (SHA-256 `0c7297d58f061ab4e5d7c55046f51fa3e8934928046f0647a0c7854e98371c12`).
+- **Architecture:** `convnext_small.fb_in22k_ft_in1k` with spatial and window-level attention MIL.
+- **Anatomy Anchors:** Uses 3D SKM-TEA anatomy V-Net (`heliosli/rsna-orthofoundation-fold0-epoch7-20261004`) to place $100\,\text{mm}$ knee-centered local crops.
+- **Performance:** Scores **0.950 as a single model on its own**! When blended 70/30 with CoAtNet-384 SWA, it forms the verified **0.954 SOTA benchmark** (`exp-16 S6Fall Blend`, Ref: `57228234`).
+

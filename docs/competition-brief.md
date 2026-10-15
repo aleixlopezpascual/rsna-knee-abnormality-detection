@@ -79,8 +79,8 @@ $$
 
 ## 6. SOTA Benchmarks & Official Submissions
 
-- **Current Public Leaderboard Peak:** **0.954 Macro ROC-AUC** (Top Silver / Gold Tier).
+- **Current Public Leaderboard Peak:** **0.954 Macro ROC-AUC** (Top Silver / Gold Tier, verified across 3 independent submissions).
 - **Official Dual-Slot Submissions Portfolio:**
-  - **Slot 1 (Max Performance):** `exp-13 Grandmaster Probit Superstack` (Ref: `57119660`, **0.954**): 4-pillar multi-domain fusion combining Helios CoAtNet-384 SWA + OrthoFoundation S6 ConvNeXt (80-98%) + 2.5D ConvNeXt Reader (+0.079 Lateral OA) + complete 5-Fold ASL Specialist (Fracture +0.032) in Latent Gaussian Probit space.
-  - **Slot 2 (Pure SOTA Anchor):** `exp-12 Helios Apex` (Ref: `57114576`, **0.954**): Pure 70/30 CoAtNet-384 SWA + OrthoFoundation S6 ConvNeXt baseline.
+  - **Slot 1 (Max Performance / Gold Medal):** `exp-13 Grandmaster Probit Superstack` (Ref: `57119660`, **0.954**) / `exp-16 S6Fall Blend` (Ref: `57228234`, **0.954**): 4-pillar multi-domain fusion combining CoAtNet-384 SWA + New All-Data S6 ConvNeXt (E_prior_s42_fall.pt) + 2.5D ConvNeXt Reader (+0.079 Lateral OA) + complete 5-Fold ASL Specialist (Fracture +0.032) in Latent Gaussian Probit space.
+  - **Slot 2 (Efficiency Track Prize Contender):** `exp-15 Efficiency Champion 0949` (Ref: `57174412`, **0.946**): Single-pass 224px FP16 engine (<100s execution, <2 GB RAM) competing directly for the **$18,000 Efficiency Prize** while remaining immune to external OAI compliance risks.
 - **5-Fold Specialist Ensemble:** 100% complete across all 4,407 studies (Folds 0..4, Mean CV: **0.6060**; dataset Version 7).
