@@ -45,18 +45,19 @@ if helios_sub_path.exists():
     shutil.copy(helios_sub_path, helios_backup_path)
 
 SURGICAL_EXPANSION_WEIGHTS = {
-    "Lateral OA": (0.80, 0.18, 0.02),        # ConvNeXt +0.0793 AUC advantage
-    "Baker's": (0.85, 0.13, 0.02),           # ConvNeXt +0.044 AUC advantage
-    "Fracture": (0.90, 0.04, 0.06),          # 5-Fold ASL Specialist sensitivity advantage (+0.032)
-    "Contusion": (0.90, 0.05, 0.05),         # 5-Fold ASL Specialist + ConvNeXt
-    "MCL": (0.92, 0.04, 0.04),               # 5-Fold ASL Specialist
-    "Medial Meniscus": (0.94, 0.03, 0.03),
-    "Lateral Meniscus": (0.95, 0.03, 0.02),
-    "PF OA": (0.95, 0.03, 0.02),
-    "Medial OA": (0.95, 0.03, 0.02),
-    "ACL": (0.96, 0.02, 0.02),
-    "Effusion": (0.98, 0.01, 0.01),
-    "Synovitis": (0.98, 0.01, 0.01),
+    # target: (w_helios_anchor, w_cnxt_reader, w_spec_5fold)
+    "Lateral OA": (0.20, 0.78, 0.02),        # ConvNeXt dominant captures +0.0793 AUC edge (0.957 key)
+    "Baker's": (0.35, 0.63, 0.02),           # ConvNeXt dominant captures +0.044 AUC edge
+    "Medial OA": (0.50, 0.48, 0.02),         # 50/50 balanced cartilage representation
+    "PF OA": (0.60, 0.38, 0.02),             # 60/40 patellofemoral axial representation
+    "Synovitis": (0.80, 0.19, 0.01),         # 80/20 joint capsule fluid lining
+    "Fracture": (0.86, 0.06, 0.08),          # 5-Fold ASL Specialist sensitivity advantage (+0.032 AUC)
+    "Contusion": (0.86, 0.08, 0.06),         # 5-Fold ASL Specialist (0.6216) + ConvNeXt marrow edema
+    "MCL": (0.90, 0.05, 0.05),               # CoAtNet + 5-Fold ASL Specialist (0.6219)
+    "Medial Meniscus": (0.92, 0.05, 0.03),   # CoAtNet global structural dominance
+    "Lateral Meniscus": (0.95, 0.03, 0.02),  # CoAtNet full-field dominance
+    "ACL": (0.94, 0.04, 0.02),               # CoAtNet sagittal dominance
+    "Effusion": (0.97, 0.02, 0.01),          # CoAtNet fluid sensitivity dominance
 }
 
 def _run_grandmaster_superstack():
