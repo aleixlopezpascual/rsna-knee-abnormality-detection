@@ -1,0 +1,21 @@
+docs/experiments.md
+  s_99caf4b929e8dc::t_e1f36ca14fe0dc 33
+scripts/build_grandmaster_superstack_notebook.py
+  s_99caf4b929e8dc::t_2635ed8b116b1d 48-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "c1d5796a4c4453fd72115744beae18612453a237",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
