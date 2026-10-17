@@ -1,0 +1,26 @@
+{
+  "id": "aleixlopez/rsna-knee-apex-0957-sota",
+  "title": "RSNA Knee Apex 0957 SOTA",
+  "code_file": "rsna-knee-apex-0957.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "nartaa/rsna-knee-publication-swa-weights-20261007",
+    "heliosli/rsna-orthofoundation-fold0-epoch7-20261004",
+    "rostigor/rsna-knee-r6-fe055406",
+    "heliosli/rsna-knee-compact-r7cnxfsss",
+    "goodpjw2008/rsna-knee-2-5d-convnext-reader"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": []
+}
