@@ -1,0 +1,19 @@
+scripts/build_apex_specialist_notebook.py
+  s_99caf4b929e8dc::t_bb2f43f9b70c1a 6-7,9-12,15-16,18-64,67-69,71-75,78-81,83-267,270,272,274-276,280-284,289,295,297-299,303-304,311,321-349,352
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "1a51189523c7bdd34f71d433e591850cf44812ae",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
