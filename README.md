@@ -4,10 +4,10 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-orange.svg)](https://pytorch.org/)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Tests: 39 passed](https://img.shields.io/badge/tests-39%20passed-green.svg)](https://docs.pytest.org/)
-[![Public LB: 0.954](https://img.shields.io/badge/Public%20LB-0.954-gold.svg)](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection)
+[![Public LB: 0.958](https://img.shields.io/badge/Public%20LB-0.958-gold.svg)](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection)
 [![Kaggle: $77,000 USD](https://img.shields.io/badge/Kaggle-RSNA%20Knee%20Detection-blue)](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection)
 
-High-performance machine learning repository for the **Radiological Society of North America (RSNA) Knee Abnormalities Detection** competition. This codebase delivers a production-grade, modular framework for volumetric MRI multi-label classification across 12 clinically significant knee pathologies, verified at **0.954 Macro ROC-AUC** on the official Kaggle Public Leaderboard.
+High-performance machine learning repository for the **Radiological Society of North America (RSNA) Knee Abnormalities Detection** competition. This codebase delivers a production-grade, modular framework for volumetric MRI multi-label classification across 12 clinically significant knee pathologies, verified at **0.958 Macro ROC-AUC** on the official Kaggle Public Leaderboard.
 
 ---
 
@@ -15,9 +15,10 @@ High-performance machine learning repository for the **Radiological Society of N
 
 | Ref | Submission / Experiment | Public Score | Status | Key Innovation |
 | :---: | :--- | :---: | :---: | :--- |
-| **`57228234`** | **`exp-16 S6Fall Blend 0955`** | **0.954** 🏆 | **COMPLETE** | Upgraded 70/30 blend with nartaa's new all-data S6 ConvNeXt (`E_prior_s42_fall.pt`, 0.950 solo) |
-| **`57119660`** | **`exp-13 Grandmaster Probit Superstack`** | **0.954** 🏆 | **COMPLETE** | **4-Pillar Multi-Domain Fusion:** Fuses 0.954 Helios Baseline (80–98%) + 2.5D ConvNeXt Reader (+0.079 Lateral OA) + complete 5-Fold ASL Specialist (Fracture +0.032) in Latent Gaussian Probit space |
-| **`57114576`** | **`exp-12 Helios 0.954 Apex`** | **0.954** 🏆 | **COMPLETE** | SOTA CoAtNet-384 SWA (0.70) + OrthoFoundation S6 ConvNeXt (0.30) |
+| **`57316129`** | **`exp-18 Pure SOTA 0.958 Peak`** | **0.958** 🏆 | **COMPLETE** | CoAtNet-384 + C224 + Heliosli R6 (Flip TTA) + R7 (fastMRI+ aux) + 1/10th ConvNeXt reader |
+| `57228234` | `exp-16 S6Fall Blend 0955` | **0.954** | `COMPLETE` | Upgraded 70/30 blend with nartaa's new all-data S6 ConvNeXt (`E_prior_s42_fall.pt`, 0.950 solo) |
+| `57119660` | `exp-13 Grandmaster Probit Superstack` | **0.954** | `COMPLETE` | **4-Pillar Multi-Domain Fusion:** Fuses 0.954 Helios Baseline (80–98%) + 2.5D ConvNeXt Reader (+0.079 Lateral OA) + complete 5-Fold ASL Specialist (Fracture +0.032) in Latent Gaussian Probit space |
+| `57114576` | `exp-12 Helios 0.954 Apex` | **0.954** | `COMPLETE` | SOTA CoAtNet-384 SWA (0.70) + OrthoFoundation S6 ConvNeXt (0.30) |
 | **`57174412`** | **`exp-15 Efficiency Champion 0949`** | **0.946** ⚡ | **COMPLETE** | High-throughput entry for the **$18,000 Efficiency Track** (<100s execution, <2 GB RAM) |
 | `57140186` | `exp-14 5-Pillar Probit Mega-Stack` | **0.953** | `COMPLETE` | 5-Pillar Probit Mega-Stack with focal joint-crop zoom |
 | `57078027` | `exp-11 4-Reader Probit Superstack` | **0.950** | `COMPLETE` | CoAtNet-384 + CoAtNet-224 + ConvNeXt + 5-Fold Specialist |
