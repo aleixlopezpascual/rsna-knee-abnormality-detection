@@ -94,3 +94,31 @@ def test_knee_multi_slot_model_forward_and_backward():
     # Verify gradients exist in head and backbone
     assert model.head.out.weight.grad is not None
     assert torch.isfinite(model.head.out.weight.grad).all()
+
+
+def test_dinov2_multi_slot_model():
+    batch_size = 2
+    n_slots = 6
+    n_targets = len(TARGET_COLS)
+
+    model = KneeMultiSlotModel(
+        backbone_name="dinov2_small",
+        pretrained=False,
+        n_slots=n_slots,
+        n_targets=n_targets,
+        head_hidden=64,
+        img_size=224,
+    )
+
+    imgs = torch.randn(batch_size, n_slots, 3, 224, 224)
+    mask = torch.ones(batch_size, n_slots)
+
+    logits = model(imgs, mask)
+    assert logits.shape == (batch_size, n_targets)
+    assert not torch.isnan(logits).any()
+
+    loss = logits.sum()
+    loss.backward()
+    assert model.head.out.weight.grad is not None
+    assert torch.isfinite(model.head.out.weight.grad).all()
+

@@ -40,6 +40,7 @@ class KneeMultiSlotModel(nn.Module):
         dropout: float = 0.2,
         prior: bool = True,
         target_cols: Sequence[str] = TARGET_COLS,
+        img_size: int = 224,
     ) -> None:
         super().__init__()
         self.n_slots = n_slots
@@ -50,6 +51,7 @@ class KneeMultiSlotModel(nn.Module):
             pretrained=pretrained,
             in_chans=3,
             weights_path=weights_path,
+            img_size=img_size,
         )
 
         self.head = SlotHead(

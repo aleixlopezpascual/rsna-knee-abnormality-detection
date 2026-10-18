@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-orange.svg)](https://pytorch.org/)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![Tests: 39 passed](https://img.shields.io/badge/tests-39%20passed-green.svg)](https://docs.pytest.org/)
+[![Tests: 40 passed](https://img.shields.io/badge/tests-40%20passed-green.svg)](https://docs.pytest.org/)
 [![Public LB: 0.958](https://img.shields.io/badge/Public%20LB-0.958-gold.svg)](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection)
 [![Kaggle: $77,000 USD](https://img.shields.io/badge/Kaggle-RSNA%20Knee%20Detection-blue)](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection)
 
@@ -253,7 +253,7 @@ kaggle competitions submissions -c rsna-knee-abnormality-detection
 All changes must pass strict unit testing and linting before merging or submitting:
 
 ```bash
-# Run the complete test suite (39 unit tests)
+# Run the complete test suite (40 unit tests)
 pytest -v
 
 # Run linting and formatting checks

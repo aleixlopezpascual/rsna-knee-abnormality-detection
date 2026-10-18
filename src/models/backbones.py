@@ -19,6 +19,7 @@ def build_backbone(
     pretrained: bool = False,
     in_chans: int = 3,
     weights_path: str | Path | None = None,
+    img_size: int = 224,
 ) -> tuple[nn.Module, int]:
     """Create a 2D vision backbone feature extractor.
 
@@ -29,6 +30,7 @@ def build_backbone(
         pretrained: Whether to load ImageNet pre-trained weights from timm.
         in_chans: Number of input image channels (default 3 for RGB/3-slice slab).
         weights_path: Optional explicit path to custom weights (e.g. RadImageNet .pt).
+        img_size: Input spatial resolution (default 224).
 
     Returns:
         backbone: nn.Module returning feature embeddings (B, num_features).
@@ -39,11 +41,17 @@ def build_backbone(
     # If loading custom weights from file, avoid downloading generic ImageNet weights
     use_timm_pretrained = pretrained and (weights_path is None)
 
+    extra_kwargs = {}
+    if "vit" in actual_name or "dino" in actual_name:
+        extra_kwargs["img_size"] = img_size
+        extra_kwargs["dynamic_img_size"] = True
+
     model = timm.create_model(
         actual_name,
         pretrained=use_timm_pretrained,
         in_chans=in_chans,
         num_classes=0,  # Strips classification head, outputs pooled embeddings
+        **extra_kwargs,
     )
 
     if weights_path is not None:
