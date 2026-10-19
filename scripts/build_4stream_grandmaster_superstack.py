@@ -135,14 +135,14 @@ def _run_4stream_orthogonal_fusion():
     class DinoModel(nn.Module):
         def __init__(self):
             super().__init__()
-            self.backbone = timm.create_model('vit_small_patch14_dinov2', pretrained=False, num_classes=0, img_size=224, dynamic_img_size=True)
+            self.backbone = timm.create_model('vit_base_patch14_dinov2', pretrained=False, num_classes=0, img_size=224, dynamic_img_size=True)
             self.head = SlotHead(dim=self.backbone.num_features, n_slots=6, n_targets=12)
-            self.register_buffer('mean', torch.tensor([0.485, 0.456, 0.406]).view(1, 1, 3, 1, 1))
-            self.register_buffer('std', torch.tensor([0.229, 0.224, 0.225]).view(1, 1, 3, 1, 1))
+            self.register_buffer('mean', torch.tensor([0.485, 0.456, 0.406]).view(1, 3, 1, 1))
+            self.register_buffer('std', torch.tensor([0.229, 0.224, 0.225]).view(1, 3, 1, 1))
         def forward(self, imgs, mask):
             b, s, c, h, w = imgs.shape
-            x = (imgs - self.mean) / self.std
-            feat = self.backbone(x.view(b * s, c, h, w)).view(b, s, -1)
+            x = (imgs.view(b * s, c, h, w) - self.mean) / self.std
+            feat = self.backbone(x).view(b, s, -1)
             return self.head(feat, mask)
 
     # 1. Load 5-Fold Specialist Ensemble Checkpoints
