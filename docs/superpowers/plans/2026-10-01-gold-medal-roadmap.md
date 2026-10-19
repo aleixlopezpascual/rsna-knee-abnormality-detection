@@ -262,3 +262,11 @@ git commit -m "feat(ensemble): deploy gold-medal dual-stream foundation-speciali
   Verified 4-stream Probit quantile fusion mathematical invariants, probability bounds, and rank preservation (45 tests passing).
 - [x] **Task 3.3: Build & Deploy 4-Stream Superstack Kernel**
   Created `scripts/build_4stream_grandmaster_superstack.py` and deployed `aleixlopez/rsna-knee-grandmaster-superstack-0960` to Kaggle GPU worker.
+
+### Phase 4: Final 2-Slot Submission Designation & Strategy Lock (Competition Endgame)
+- [ ] **Task 4.1: Designate Slot 1 (Peak Performance & Anti-Shakeup):**
+  Select `exp-18 Pure SOTA Peak` (Ref: `57316129`, **0.958**) or `exp-19 Golden Fusion` (Ref: `57365961`, **0.957**) / `exp-20` (Ref: `57410300`) for the $59,000 Main Prize.
+- [ ] **Task 4.2: Designate Slot 2 (Efficiency Track Champion):**
+  Select `exp-15 Efficiency Champion` (Ref: `57174412`, **0.946** in <100s) for the $18,000 Efficiency Prize and clean OAI compliance hedge.
+- [ ] **Task 4.3: Author Final Solution Summary & Verification Writeup:**
+  Synthesize end-to-end documentation in `docs/solution_writeup.md`.
