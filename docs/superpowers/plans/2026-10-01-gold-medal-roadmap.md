@@ -240,9 +240,9 @@ git commit -m "feat(ensemble): deploy gold-medal dual-stream foundation-speciali
 ## 🚀 The 0.965+ Gold Medal Expansion Plan
 
 ### Phase 1: High-Fidelity Clinical Continuous Report Relabeling (Target: +0.006 AUC)
-- [ ] **Task 1.1: Build `src/report_continuous_extractor.py`**
+- [x] **Task 1.1: Build `src/report_continuous_extractor.py`**
   Generate continuous calibrated probabilities $[0.0, 1.0]$ based on clinical hedging (definite = 0.98, suspected = 0.82, subtle = 0.45, unlikely = 0.15, normal = 0.02) across all 12 targets.
-- [ ] **Task 1.2: Add unit tests in `tests/test_report_continuous_extractor.py`**
-  Verify gold ground-truth preservation, multilingual parsing (English, Spanish, German), and calibration monotonicity.
-- [ ] **Task 1.3: Generate `input/train_continuous_labels.parquet`**
-  Process all 4,349 unannotated studies while strictly preserving the 58 gold studies.
+- [x] **Task 1.2: Add unit tests in `tests/test_report_continuous_extractor.py`**
+  Verify gold ground-truth preservation, multilingual parsing (English, Spanish, German), and calibration monotonicity (44 unit tests passing).
+- [x] **Task 1.3: Generate `input/train_continuous_labels.parquet`**
+  Process all 4,349 unannotated studies while strictly preserving the 58 gold studies. Generated continuous calibrated dataset across all 4,407 studies.
