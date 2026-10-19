@@ -1,0 +1,19 @@
+scripts/build_4stream_grandmaster_superstack.py
+  s_99caf4b929e8dc::t_a07a615c3e1a1f 138,140-141,144-145
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "3eecc269cd184363bf4797d65fe9ddc56e767db3",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
