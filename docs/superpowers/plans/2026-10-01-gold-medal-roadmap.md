@@ -230,5 +230,19 @@ git commit -m "feat(ensemble): deploy gold-medal dual-stream foundation-speciali
 - **0.948 Public LB (Ref: 57019581):** SOTA CoAtNet SWA + 3-Fold 2.5D ConvNeXt + Dual-Fold ASL Specialist (+0.005 gain over prior ceiling).
 - **0.950 Public LB (Ref: 57047082 / 57078027):** Verified SOTA CoAtNet SWA + ConvNeXt baseline and 4-Reader Probit Quantile Superstack.
 - **0.954 Public LB (Triple Confirmation: Refs 57114576, 57119660, 57228234):** Verified across 3 independent architectures: 1) Helios Apex 70/30; 2) Grandmaster 4-Pillar Probit Superstack; 3) S6Fall All-Data Blend with new 0.950 ConvNeXt (`E_prior_s42_fall.pt`).
+- **0.958 Public LB (Ref: 57316129):** SOTA CoAtNet-384 + C224 + Heliosli R6 (Flip TTA) + R7 (0.40) + 1/10th ConvNeXt reader establishing our all-time repository peak.
+- **0.957 Public LB (Ref: 57365961):** Golden Fusion Superstack embedding our complete 5-Fold ASL Specialist in Latent Gaussian Probit space.
 - **0.946 Efficiency Track Benchmark (Ref: 57174412):** Single-pass 224px FP16 engine (<100s execution, <2 GB RAM) competing directly for the **$18,000 Efficiency Prize**.
 - **Complete 5-Fold Specialist Ensemble Finished:** Mean CV Macro-AUC: 0.6060 (Folds 0..4 complete; dataset Version 7 ready).
+
+---
+
+## 🚀 The 0.965+ Gold Medal Expansion Plan
+
+### Phase 1: High-Fidelity Clinical Continuous Report Relabeling (Target: +0.006 AUC)
+- [ ] **Task 1.1: Build `src/report_continuous_extractor.py`**
+  Generate continuous calibrated probabilities $[0.0, 1.0]$ based on clinical hedging (definite = 0.98, suspected = 0.82, subtle = 0.45, unlikely = 0.15, normal = 0.02) across all 12 targets.
+- [ ] **Task 1.2: Add unit tests in `tests/test_report_continuous_extractor.py`**
+  Verify gold ground-truth preservation, multilingual parsing (English, Spanish, German), and calibration monotonicity.
+- [ ] **Task 1.3: Generate `input/train_continuous_labels.parquet`**
+  Process all 4,349 unannotated studies while strictly preserving the 58 gold studies.
