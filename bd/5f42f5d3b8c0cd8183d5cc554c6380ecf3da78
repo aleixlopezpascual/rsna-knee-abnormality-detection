@@ -1,0 +1,19 @@
+docs/superpowers/plans/2026-10-01-gold-medal-roadmap.md
+  s_99caf4b929e8dc::t_ad73b8fafef5be 233-234,237-248
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "bd5f42f5d3b8c0cd8183d5cc554c6380ecf3da78",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
