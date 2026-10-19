@@ -246,3 +246,11 @@ git commit -m "feat(ensemble): deploy gold-medal dual-stream foundation-speciali
   Verify gold ground-truth preservation, multilingual parsing (English, Spanish, German), and calibration monotonicity (44 unit tests passing).
 - [x] **Task 1.3: Generate `input/train_continuous_labels.parquet`**
   Process all 4,349 unannotated studies while strictly preserving the 58 gold studies. Generated continuous calibrated dataset across all 4,407 studies.
+
+### Phase 2: Train the 3rd Orthogonal Vision Family (DINOv2 ViT-Small)
+- [x] **Task 2.1: Enable Continuous Soft-Target Training & Dynamic Sizing in `src/train.py`**
+  Added `--continuous-labels` support and passed `img_size` to `KneeMultiSlotModel` for dynamic patch interpolation.
+- [x] **Task 2.2: Build DINOv2 Training Generator & Notebook Package**
+  Created `scripts/build_dinov2_training_notebook.py` and assembled `notebooks/train_dinov2/rsna-knee-dinov2-fold0.ipynb`.
+- [x] **Task 2.3: Push DINOv2 Fold 0 Training Kernel to Kaggle GPU**
+  Pushed `aleixlopez/rsna-knee-dinov2-fold-0` to Kaggle worker with ASL loss and continuous clinical targets.

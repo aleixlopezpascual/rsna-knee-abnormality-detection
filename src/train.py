@@ -150,6 +150,7 @@ def train_fold(
         head_hidden=args.head_hidden,
         dropout=args.dropout,
         prior=True,
+        img_size=args.img_size,
     ).to(device)
 
     # Configure loss function
@@ -242,24 +243,33 @@ def main() -> None:
     parser.add_argument("--clip", type=float, default=0.05, help="ASL negative probability margin clip")
     parser.add_argument("--class-weight-beta", type=float, default=0.35, help="Inverse frequency weight exponent")
 
+    parser.add_argument("--continuous-labels", action="store_true", default=True, help="Use high-fidelity continuous calibrated report labels")
+
     args = parser.parse_args()
     seed_everything(args.seed)
     device = get_device(args.device)
     print(f"Using device: {device} | Model: {args.model} | Resolution: {args.img_size}x{args.img_size}")
 
+    continuous_parquet = Path(INPUT_DIR) / "train_continuous_labels.parquet"
     train_csv_path = Path(INPUT_DIR) / "train.csv"
-    if not train_csv_path.exists() or args.dry_run:
+
+    if args.dry_run:
         print("Using dry-run / synthetic test studies...")
         mock_studies = [f"mock_study_{i}" for i in range(20)]
         mock_reports = [f"Report findings {i % 5}" for i in range(20)]
         df = pd.DataFrame({"StudyInstanceUID": mock_studies, "Report": mock_reports})
         for c in TARGET_COLS:
             df[c] = np.random.uniform(0.1, 0.9, size=20)
-    else:
+    elif args.continuous_labels and continuous_parquet.exists():
+        print(f"Loading high-fidelity continuous labels from {continuous_parquet}...")
+        df = pd.read_parquet(continuous_parquet)
+    elif train_csv_path.exists():
         print(f"Loading {train_csv_path}...")
         df = pd.read_csv(train_csv_path)
         print("Populating labels from reports with NLP reader...")
         df = populate_labels_from_reports(df, target_cols=TARGET_COLS)
+    else:
+        raise FileNotFoundError(f"Neither {continuous_parquet} nor {train_csv_path} found.")
 
     # Generate folds
     df = generate_report_grouped_folds(df, target_cols=TARGET_COLS, n_splits=args.n_splits, seed=args.seed)

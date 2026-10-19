@@ -1,0 +1,22 @@
+{
+  "id": "aleixlopez/rsna-knee-dinov2-fold0",
+  "title": "RSNA Knee DINOv2 Fold 0",
+  "code_file": "rsna-knee-dinov2-fold0.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "aleixlopez/rsna-knee-specialist-weights"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": []
+}
