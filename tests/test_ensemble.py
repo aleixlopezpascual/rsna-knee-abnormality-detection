@@ -114,3 +114,43 @@ def test_probit_quantile_fusion():
         assert fused.loc[0, col] < fused.loc[1, col] < fused.loc[2, col] < fused.loc[3, col]
 
 
+def test_four_stream_grandmaster_probit_fusion():
+    studies = [f"study_{i:02d}" for i in range(10)]
+    models = {}
+    for name in ["coatnet", "helios", "dinov2", "specialist"]:
+        df = pd.DataFrame({"StudyInstanceUID": studies})
+        for col in TARGET_COLS:
+            # Generate continuous monotonic predictions with small variations
+            base = np.linspace(0.05, 0.95, 10)
+            noise = np.random.RandomState(42).normal(0, 0.02, 10)
+            df[col] = np.clip(base + noise, 0.01, 0.99)
+        models[name] = df
+
+    weights = {}
+    for col in TARGET_COLS:
+        weights[col] = {
+            "coatnet": 0.40,
+            "helios": 0.40,
+            "dinov2": 0.15,
+            "specialist": 0.05,
+        }
+    # Minority boost on Fracture
+    weights["Fracture"] = {
+        "coatnet": 0.30,
+        "helios": 0.40,
+        "dinov2": 0.15,
+        "specialist": 0.15,
+    }
+
+    fused = probit_quantile_fusion(models, weights, target_cols=TARGET_COLS)
+    assert len(fused) == 10
+    assert not fused.isnull().any().any()
+    assert list(fused.columns) == ["StudyInstanceUID"] + list(TARGET_COLS)
+    for col in TARGET_COLS:
+        vals = fused[col].to_numpy()
+        assert (vals >= 0.0).all() and (vals <= 1.0).all()
+        # Verify rank monotonicity
+        assert np.all(np.diff(vals) >= 0)
+
+
+

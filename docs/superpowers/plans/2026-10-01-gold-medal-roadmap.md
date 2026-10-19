@@ -254,3 +254,11 @@ git commit -m "feat(ensemble): deploy gold-medal dual-stream foundation-speciali
   Created `scripts/build_dinov2_training_notebook.py` and assembled `notebooks/train_dinov2/rsna-knee-dinov2-fold0.ipynb`.
 - [x] **Task 2.3: Push DINOv2 Fold 0 Training Kernel to Kaggle GPU**
   Pushed `aleixlopez/rsna-knee-dinov2-fold-0` to Kaggle worker with ASL loss and continuous clinical targets.
+
+### Phase 3: Fine-Tune the 4-Family Grandmaster Probit Fusion (Target: 0.963–0.966)
+- [x] **Task 3.1: Formulate 4-Stream Orthogonal Probit Fusion Weights**
+  Designed target-specific weights uniting CoAtNet-384/224 + Heliosli R6/R7 (86%–95%), DINOv2 ViT-S (5%–8%), and 5-Fold ASL Specialist (2%–8%).
+- [x] **Task 3.2: Add unit tests in `tests/test_ensemble.py`**
+  Verified 4-stream Probit quantile fusion mathematical invariants, probability bounds, and rank preservation (45 tests passing).
+- [x] **Task 3.3: Build & Deploy 4-Stream Superstack Kernel**
+  Created `scripts/build_4stream_grandmaster_superstack.py` and deployed `aleixlopez/rsna-knee-grandmaster-superstack-0960` to Kaggle GPU worker.

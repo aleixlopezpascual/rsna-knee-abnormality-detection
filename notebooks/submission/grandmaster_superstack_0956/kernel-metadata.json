@@ -1,6 +1,6 @@
 {
-  "id": "aleixlopez/rsna-knee-grandmaster-superstack-0956",
-  "title": "RSNA Knee Grandmaster Superstack 0956",
+  "id": "aleixlopez/rsna-knee-grandmaster-superstack-0960",
+  "title": "RSNA Knee Grandmaster Superstack 0960",
   "code_file": "rsna-knee-grandmaster-superstack.ipynb",
   "language": "python",
   "kernel_type": "notebook",
@@ -12,11 +12,13 @@
     "gpu"
   ],
   "dataset_sources": [
-    "heliosli/rsna-knee-compact-v1",
     "nartaa/rsna-knee-publication-swa-weights-20261007",
     "heliosli/rsna-orthofoundation-fold0-epoch7-20261004",
+    "rostigor/rsna-knee-r6-fe055406",
+    "heliosli/rsna-knee-compact-r7cnxfsss",
     "goodpjw2008/rsna-knee-2-5d-convnext-reader",
-    "aleixlopez/rsna-knee-specialist-weights"
+    "aleixlopez/rsna-knee-specialist-weights",
+    "pilkwang/rsna-knee-weights"
   ],
   "kernel_sources": [],
   "competition_sources": [
