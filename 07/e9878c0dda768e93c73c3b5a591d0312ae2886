@@ -1,0 +1,19 @@
+docs/experiments.md
+  s_99caf4b929e8dc::t_f90a47db32a3de 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "07e9878c0dda768e93c73c3b5a591d0312ae2886",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
