@@ -560,26 +560,27 @@ Our **`exp-15 Efficiency Champion` (0.946)** significantly beats heavy 0.954 mod
 
 ---
 
-## 11. Final 2-Slot Submission Portfolio & Endgame Strategy
+## 11. Final Submission Portfolio & Endgame Strategy
 
-Under Kaggle rules, every team designates **exactly 2 final submissions** for private scoring. Furthermore, submissions selected for the main competition are **automatically evaluated for both the Main Prize and the Efficiency Prize**:
+This section's earlier portfolio was a historical plan and is superseded by [`docs/final-submission-selection.md`](final-submission-selection.md). Kaggle allows **up to two** final submissions. Efficiency eligibility depends on the competition's final-selection rules and private benchmark; a submission may be eligible for both prizes, but it is not guaranteed merely by being selected for the Main Prize.
 
 ```
-                         OFFICIAL 2-SLOT COMPETITION PORTFOLIO
+                    CURRENT DEFAULT PORTFOLIO (NOT YET APPLIED)
                                            │
               ┌────────────────────────────┴────────────────────────────┐
               ▼                                                         ▼
         [SLOT 1 SELECTION]                                        [SLOT 2 SELECTION]
-   exp-13 Grandmaster Superstack                            exp-15 Efficiency Champion
-   (Ref: 57119660 | Public LB: 0.954)                       (Ref: 57174412 | Public LB: 0.946)
-   • 4-Pillar Probit Quantile Normal Fusion                 • Single-pass 224px FP16 Engine
-   • Max Performance / High Ceiling                         • Low Latency: ~7 min turnaround
-   • Captures +0.079 Lateral OA & +0.032 Fracture           • Memory: < 2 GB RAM / 4 GB VRAM
+   exp-18 SOTA Peak                                       one exp-19 / exp-20 hedge
+   (Ref: 57316129 | Public LB: 0.958)                    (Ref: 57365961 / 57410300 | 0.957)
+   • Highest verified public score                        • Main-track private-LB hedge
+   • Performance anchor                                  • Exact .957 variant still pending
               │                                                         │
               ▼                                                         ▼
-    TARGET: $59,000 MAIN PRIZE                                TARGET: $18,000 EFFICIENCY PRIZE
-       (Gold Medal Peak)                                         (Efficiency Champion)
+    TARGET: MAIN SCORE / MEDAL HEDGE                           TARGET: MAIN SCORE / PRIVATE HEDGE
+       (Main performance)                                        (Main-track hedge)
 ```
+
+The `exp-15` Efficiency Champion (0.946) is retained as an optional long-shot. In the 2026-10-20 21:16 UTC public snapshot it ranked 174th of 6,159; the Efficiency Track awards only three prizes. No final selection was changed by this documentation update.
 
 ---
 

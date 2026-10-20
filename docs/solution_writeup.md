@@ -169,12 +169,16 @@ where minimizing the composite score is the objective.
 
 ---
 
-## 8. Final 2-Slot Submission Strategy
+## 8. Final Submission Selection Plan
 
-| Slot | Selected Pipeline | Target Prize | Strategic Rationale |
-| :---: | :--- | :--- | :--- |
-| **Slot 1** | **`exp-18 Pure SOTA Peak (0.958)` / `exp-19 Golden Fusion (0.957)`** | **$59,000 Main Prize** | Maximizes pure Macro ROC-AUC while embedding our 5-Fold ASL Specialist for rare fracture protection against private shakeup. |
-| **Slot 2** | **`exp-15 Efficiency Champion (0.946)`** | **$18,000 Efficiency Prize** | Executes in <100 seconds with <2 GB RAM; provides a 100% compliant hedge against external OAI data licensing risks. |
+The current selection decision is recorded in [`docs/final-submission-selection.md`](final-submission-selection.md). As of 2026-10-21, the agreed default is:
+
+| Slot | Default choice | Rationale |
+| :---: | :--- | :--- |
+| **1** | **`exp-18` (Ref: `57316129`, public AUC `0.958`)** | Highest verified public score; main performance anchor. |
+| **2** | **One of `exp-19` (`57365961`) or `exp-20` (`57410300`), both `0.957`** | Main-track/private-leaderboard hedge. The exact variant is still pending. |
+
+`exp-15` (`57174412`, `0.946`, under 100 seconds) remains the efficiency long-shot, but is **not selected by default**: the 2026-10-20 21:16 UTC public Efficiency Leaderboard snapshot ranked it 174th of 6,159, while only three Efficiency Prizes are awarded. No Kaggle final selections have been changed; the final UI action still requires explicit user approval.
 
 ---
 

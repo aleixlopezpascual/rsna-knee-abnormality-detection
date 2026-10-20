@@ -118,22 +118,18 @@ While top teams have proprietary LLM labels, **our repository holds four unique 
 
 ---
 
-### Advantage 3: The $18,000 Efficiency Track Benchmark (0.946 in <100s)
-* **The Opportunity:** RSNA 2026 offers **$18,000 USD** in dedicated prizes ($7,000 / $6,000 / $5,000) for the most compute-efficient submissions.
-* **The Competitor Flaw:** Top competitors are running bloated 35-minute to 45-minute ensembles consuming $>15\,\text{GB}$ RAM, which score poorly on the official Kaggle efficiency formula:
-  $$\text{Efficiency} = \frac{\text{Benchmark} - \text{AUC}}{\max \text{AUC}} + \frac{\text{RuntimeSeconds}}{32400}$$
-* **Our Asset:** Our **`exp-15 Efficiency Champion` (Ref: `57174412`)**:
-  * Scores **0.946 Public Macro ROC-AUC** (higher than nartaa's 0.945 baseline).
-  * Executes in **under 100 seconds** with **<2 GB RAM**.
-  * Saves over 25 minutes of runtime, which under Kaggle's formula provides a **massive $-0.046$ efficiency bonus** that places us among the global favorites for the **$18,000 Efficiency Prize**!
+### Advantage 3: Efficiency Track (Updated Public Snapshot)
+* **Prize structure:** Three Efficiency Prizes are awarded: $7,000, $6,000, and $5,000.
+* **Our entry:** `exp-15` (Ref: `57174412`) scored **0.946** publicly and is documented at under 100 seconds and under 2 GB RAM.
+* **Current standing:** The scheduled public Efficiency Leaderboard output from 2026-10-20 21:16 UTC listed Aleix López **174th of 6,159**. The table displays rank and public AUC, not the full efficiency score or runtime contribution.
+* **Selection implication:** This is a long-shot for a top-three prize, not a leading contender. Under the agreed plan it is not the default Slot 2; see [`docs/final-submission-selection.md`](final-submission-selection.md).
 
 ---
 
-### Advantage 4: Clean Data & Rules-Compliance Dual-Slot Hedge
-* **The Compliance Risk (Topic #749145):** Many top public models were augmented with external knee MRIs from the NIH Osteoarthritis Initiative (OAI). However, NIH notice `NOT-OD-25-083` imposes strict geo-restrictions blocking participants from certain countries from accessing the data. Under Kaggle Competition Rule 2.6.b, external data must be reasonably accessible to all participants.
-* **Our Asset:** Our **Dual-Slot Portfolio Strategy**:
-  * **Slot 1:** `exp-18` (0.958) / `exp-19` (0.957) — Maximum performance superstack.
-  * **Slot 2:** `exp-15 Efficiency Champion` (0.946) — Single-pass, clean model that is 100% compliant and protects us against any post-competition disqualification!
+### Advantage 4: Final Selection Plan
+* The agreed default is `exp-18` (Ref: `57316129`, **0.958**) plus one of the `0.957` main-track alternatives (`57365961` or `57410300`) as a private-leaderboard hedge.
+* The prior strategy of using `exp-15` as the default Slot 2 is superseded. No new legal/compliance conclusion is made here; check current competition rules and dataset licenses separately if that becomes a selection criterion.
+* The Kaggle final-selection UI has not been changed; the exact .957 variant and actual selection action remain pending explicit user approval.
 
 ---
 
@@ -184,14 +180,16 @@ To realistically close the $0.007$ gap and compete for the #1 Gold Medal positio
 
 ---
 
-### Phase 4: Final 2-Slot Submission Designation (Competition Endgame)
+### Phase 4: Final Submission Designation (Historical Plan Superseded)
 
-On `https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/submissions`:
+The current selection decision is in [`docs/final-submission-selection.md`](final-submission-selection.md). The former default of placing `exp-15` in Slot 2 is superseded: the current agreed default is `exp-18` (`57316129`, `0.958`) plus one `0.957` main-track hedge (`57365961` or `57410300`). The efficiency entry remains an optional long-shot, not the default.
 
-| Slot | Selected Pipeline | Target Prize | Expected Final Standing |
-| :---: | :--- | :--- | :--- |
-| **Slot 1** | **`exp-18 SOTA Peak (0.958)` / `exp-19 Golden Fusion (0.957)`** | **$59,000 Main Prize** | Top Gold / Silver Medal Tier |
-| **Slot 2** | **`exp-15 Efficiency Champion (0.946)`** | **$18,000 Efficiency Prize** | **Top Contender for 1st Place Efficiency Prize ($7,000)** |
+| Slot | Current default | Purpose |
+| :---: | :--- | :--- |
+| **1** | **`exp-18 SOTA Peak` (Ref: `57316129`, `0.958`)** | Main-performance anchor. |
+| **2** | **One of `exp-19` (`57365961`) / `exp-20` (`57410300`), both `0.957`** | Main-track private-leaderboard hedge; exact variant pending. |
+
+`exp-15` (`57174412`, `0.946`) is no longer the default Slot 2. See [`docs/final-submission-selection.md`](final-submission-selection.md) for the Efficiency Leaderboard snapshot and selection rationale. The Kaggle UI selection itself remains unapplied pending explicit user approval.
 
 ---
 
@@ -205,4 +203,4 @@ On `https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/submissi
 | **Minority Handling (Fracture)** | Naive BCE (Suppresses Rare) | **Asymmetric Focal Loss (+0.032 AUC)** | ASL / Class-Balanced Focal |
 | **Ensembling Math** | Linear Rank Averaging | **Latent Gaussian Probit Quantile ($\Phi^{-1}$)** | Probit / Power-Rank Blending |
 | **Efficiency Track Contender** | None (>25 min runtime) | **0.946 in <100s (<2 GB RAM)** | Rare (Most focus on main track only) |
-| **OAI Compliance Risk** | High (100% dependent on OAI) | **Hedged (Dual-Slot Portfolio)** | Variable |
+| **OAI Compliance Status** | Uses OAI-derived weights | **OAI-derived weights present; eligibility guidance remains general and OAI-specific geo access unresolved** | Variable |

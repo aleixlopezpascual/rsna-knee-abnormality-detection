@@ -25,7 +25,7 @@ When resuming work in future sessions, use these verified submission references:
 | **`57365961`** | **`exp-19 Golden Fusion`** | **0.957** 🏆 | **Main Track (ASL Hybrid)** | 0.958 SOTA Anchor + Complete 5-Fold ASL Specialist (+0.032 Fracture AUC lift) in Latent Gaussian Probit space. Maximum private test defense. |
 | **`57410300`** | **`exp-20 4-Stream Superstack`** | **0.957** 🏆 | Main Track Consensus | 0.958 SOTA + 5-Fold ASL Specialist in Probit space. |
 | **`57438116`** | **`exp-21 4-Stream V2`** | **0.956** | Experimental Audit | 0.958 SOTA + DINOv2 ViT-Base (768 dim) + 5-Fold ASL Specialist. Confirmed early DINOv2 weights slightly dilute peak CoAtNet. |
-| **`57174412`** | **`exp-15 Efficiency Champion`** | **0.946** ⚡ | **$18,000 Efficiency Prize** | Single-pass 224px FP16 engine (<100s execution, <2 GB RAM). Unmatched $-0.046$ efficiency bonus and 100% OAI compliance hedge. |
+| **`57174412`** | **`exp-15 Efficiency Champion`** | **0.946** ⚡ | **$18,000 Efficiency Prize** | Single-pass 224px FP16 engine (<100s execution, <2 GB RAM). Its metadata includes Nartaa's CoAtNet weights, trained partly with OAI data; do not treat it as an OAI-free compliance hedge. |
 | `57228234` | `exp-16 S6Fall Blend 0955` | **0.954** | Baseline | CoAtNet-384 SWA (0.70) + All-Data S6 ConvNeXt (0.30). |
 | `57119660` | `exp-13 Grandmaster Probit`| **0.954** | Baseline | 4-Pillar Multi-Domain Probit Fusion. |
 
@@ -37,22 +37,11 @@ If resuming work, pick one of these four concrete paths:
 
 ---
 
-### Path 1: Competition Endgame Lock & Verification (Prudent / Zero Risk)
-* **Goal:** Finalize the competition and lock our designated 2-submission portfolio.
-* **Actions Required:**
-  1. Open Kaggle submissions page: `https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/submissions`
-  2. Select **Slot 1 (Main Track):**
-     * Option A: `exp-18` (Ref: `57316129`, **0.958**) — Highest verified public concordance.
-     * Option B: `exp-19` (Ref: `57365961`, **0.957**) — Embeds our 5-Fold ASL Specialist for rare fracture protection against private shakeup.
-  3. Select **Slot 2 (Efficiency Track):**
-     * Locked: `exp-15` (Ref: `57174412`, **0.946**) — Top favorite for 1st Place in the $18,000 Efficiency Prize.
-  4. Ensure all team external datasets are listed in competition submission notes:
-     * `nartaa/rsna-knee-publication-swa-weights-20261007`
-     * `heliosli/rsna-orthofoundation-fold0-epoch7-20261004`
-     * `rostigor/rsna-knee-r6-fe055406`
-     * `heliosli/rsna-knee-compact-r7cnxfsss`
-     * `goodpjw2008/rsna-knee-2-5d-convnext-reader`
-     * `aleixlopez/rsna-knee-specialist-weights` (Version 7)
+### Path 1: Final Submission Selection (Current Decision)
+* **Canonical decision note:** [`docs/final-submission-selection.md`](final-submission-selection.md).
+* **Default portfolio:** Slot 1 is `exp-18` (Ref: `57316129`, public AUC **0.958**); Slot 2 is one of the `0.957` main-track alternatives, `exp-19` (Ref: `57365961`) or `exp-20` (Ref: `57410300`). The exact second reference remains to be chosen.
+* **Efficiency entry:** `exp-15` (Ref: `57174412`, public AUC **0.946**) is not Slot 2 by default. The 2026-10-20 21:16 UTC public Efficiency Leaderboard snapshot placed it 174th of 6,159; the Efficiency Track has only three cash prizes. Keep it as a long-shot option only if the user later prefers that risk over the main-track hedge.
+* **Approval boundary:** No final-submission selection has been changed in Kaggle. Obtain explicit user approval before doing so.
 
 ---
 

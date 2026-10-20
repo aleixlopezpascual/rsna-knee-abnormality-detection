@@ -36,7 +36,15 @@
   - Width-flip TTA across every imaging plane hurt score (0.940 -> 0.939).
   - Reducing window density from 94 to 24 dropped score (0.940 -> 0.934).
   - Shrinking inference crop to 288px dropped score (0.948 -> 0.946).
-- **OAI Controversy & Rules Risk:** Grandmaster Tucker Arrants flagged that external OAI data is access-restricted in several countries (e.g. China, Russia), creating a potential rules violation risk if hosts disqualify OAI-trained checkpoints. **Strategic Mandate:** Keep a dual submission portfolio (Slot 1: OAI-augmented Apex; Slot 2: 100% RSNA-clean).
+- **OAI eligibility remains unresolved for named datasets/checkpoints:** In [#743416](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/743416), the host says simple registration and acceptance of data-use terms meet the general accessibility test, while institutional research agreements or institution-only access do not. Kaggle staff later said it cannot pre-approve specific datasets or weights ([#747455](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/747455)); the OAI-specific geo-access question remained unanswered in [#749145](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/749145) when checked on 2026-10-21. NIMH describes OAI data as Open Access, so this is an uncertainty, not a finding of disqualification. Our Exp-18 and Exp-15 kernels both attach Nartaa CoAtNet weights trained partly with OAI knees; **Exp-15 is not an OAI-free hedge**. Public weights trained on competition data are award-eligible per [#744056](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/744056), but that does not settle OAI-trained weights. See the current [final-submission selection note](../final-submission-selection.md); no clean-data fallback has been verified.
+
+### Endgame discussion update (2026-10-21)
+
+- [#747455](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/747455): Kaggle staff will not interpret third-party data-use terms or pre-approve individual weights; teams remain responsible for compliance.
+- [#743420](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/743420): No host answer found to whether incompatible upstream licenses exempt winning weights from the public-weight release requirement.
+- [#749570](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/749570): A community analysis reports heavy public-score ties and roughly 135 teams per 0.001 near the medal band; treat as a dated community snapshot, not official standings.
+- [#743356](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/743356): A forum response says both final selections can be considered for both Main and Efficiency prizes; no slot needs to be reserved for Efficiency.
+- [#748181](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/748181): Kaggle staff confirms a one-week lock on publishing new public notebooks before the deadline. This does not provide evidence of a score improvement.
 
 ### Topic 748011: Local CV or Public LB: which one can we trust? (colum2131 / datnt114)
 - **CV Correlation Discovery:**

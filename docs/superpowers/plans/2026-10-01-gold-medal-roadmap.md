@@ -263,10 +263,13 @@ git commit -m "feat(ensemble): deploy gold-medal dual-stream foundation-speciali
 - [x] **Task 3.3: Build & Deploy 4-Stream Superstack Kernel**
   Created `scripts/build_4stream_grandmaster_superstack.py` and deployed `aleixlopez/rsna-knee-grandmaster-superstack-0960` to Kaggle GPU worker.
 
-### Phase 4: Final 2-Slot Submission Designation & Strategy Lock (Competition Endgame)
-- [ ] **Task 4.1: Designate Slot 1 (Peak Performance & Anti-Shakeup):**
-  Select `exp-18 Pure SOTA Peak` (Ref: `57316129`, **0.958**) or `exp-19 Golden Fusion` (Ref: `57365961`, **0.957**) / `exp-20` (Ref: `57410300`) for the $59,000 Main Prize.
-- [ ] **Task 4.2: Designate Slot 2 (Efficiency Track Champion):**
-  Select `exp-15 Efficiency Champion` (Ref: `57174412`, **0.946** in <100s) for the $18,000 Efficiency Prize and clean OAI compliance hedge.
+### Phase 4: Final Submission Selection (Decision as of 2026-10-21)
+
+See the canonical decision note: [`docs/final-submission-selection.md`](../../final-submission-selection.md).
+
+- [x] **Slot 1 default:** `exp-18 Pure SOTA Peak` (Ref: `57316129`, public AUC **0.958**).
+- [x] **Slot 2 default strategy:** choose one of the close main-track alternatives `exp-19` (Ref: `57365961`, **0.957**) or `exp-20` (Ref: `57410300`, **0.957**) as a private-leaderboard hedge. The exact .957 entry is not yet chosen.
+- [x] **Efficiency trade-off reviewed:** do not use `exp-15` (Ref: `57174412`, **0.946**) as Slot 2 by default. Its public efficiency rank was 174/6,159 in the 2026-10-20 21:16 UTC snapshot; only three Efficiency Prizes are awarded.
+- [ ] **Apply final selection in Kaggle:** not yet done; requires separate explicit approval.
 - [x] **Task 4.3: Author Final Solution Summary & Verification Writeup:**
   Synthesized publication-grade competition solution report in `docs/solution_writeup.md` documenting physics preprocessing, 2.5D multi-slot models, ASL loss formulations, Probit quantile normal fusion, efficiency benchmarks, and 2-slot designation rationale.
