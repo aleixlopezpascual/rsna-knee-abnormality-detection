@@ -1,0 +1,19 @@
+docs/endgame_playbook.md
+  s_99caf4b929e8dc::t_8caa60405e1c6d 1-122
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "26b424743d46a6c35400337ef075b16e2c1489dd",
+  "prompts": {},
+  "sessions": {
+    "s_99caf4b929e8dc": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27ee1f64-ea6d-42ff-811e-6e45f8b708a3",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
