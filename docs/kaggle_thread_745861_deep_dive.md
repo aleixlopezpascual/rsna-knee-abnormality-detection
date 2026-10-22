@@ -1,6 +1,6 @@
 # Deep Dive: Kaggle Discussion #745861 — “Tricks for the competition”
 
-- **Reviewed:** 2026-10-22 (Kaggle topic API refresh at 10:20 UTC)
+- **Reviewed:** 2026-10-22 (Kaggle topic API refresh at 12:20 UTC)
 - **Thread:** [745861](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/745861)
 - **Outcome:** Research and claim audit only. No model, Kaggle kernel, submission, or final-selection change was made.
 
@@ -16,7 +16,7 @@ A more serious factual correction: the author’s example claims that a gold stu
 
 ## Scope and evidence rules
 
-- The user-provided capture showed 40 comments. At the refresh for this report, Kaggle’s topic API returned **52 comment records**; 31 were by the original poster, `hengck23`. Thread counts are dynamic, so the number here is an as-of snapshot, not a permanent property.[41]
+- The user-provided capture showed 40 comments. At the 12:20 UTC refresh, Kaggle’s topic API still returned **52 comment records**; 31 were by the original poster, `hengck23`, and the latest reply remained dated 2026-10-21 16:19 UTC. No new substantive replies appeared since the earlier 10:20 UTC check.[41]
 - Kaggle’s page extractor was rate-limited, so I read the full topic/comment payload through Kaggle’s API/CLI.[41] I visually inspected the substantive image attachments; `Selection_5207.png` returned 404 and is not used as evidence.[41] The original post’s supplied capture is retained as context, and the audit below checks its claims against accessible comments, attachments, local competition files, papers, dataset cards, and host rulings.[41]
 - **Official host/rule statement** means a direct organizer answer. **Paper/dataset/repository statement** means the source’s own description or result, not independent reproduction. **Participant-reported** means a Kaggle comment or personal result. **Hypothesis** means a proposed method without measured confirmation.
 - The citations support the source statements; they do not turn author-reported LB or 58-study results into independent evidence.[41][64]
@@ -64,7 +64,11 @@ The external-data point is separate from model performance. The competition host
 
 The OAI portal says access requires an NDA account and describes use for human-subject research for scientific and educational purposes.[58]
 
-In the sources reviewed here, I found no dataset-specific ruling authorizing the exact 3DReasonKnee or 5M OrthoFoundation checkpoint for a prize-eligible submission.[35][42]
+A later reply by María Cruz in discussion #747455 says the host cannot interpret third-party data-use agreements or pre-approve specific datasets/weights; it directs teams back to the competition rules and provider terms, not a specific ruling.[74]
+
+The OAI-specific discussion #749145 still has four retrieved participant comments and no host determination.[73]
+
+In the sources reviewed, I found no dataset-specific authorization for the exact 3DReasonKnee or 5M OrthoFoundation checkpoint for a prize-eligible submission.[73][74]
 
 Do not treat a general rule or the HF/Kaggle dataset card as a waiver of the upstream OAI/clinical-cohort terms.[72][docs/final-submission-selection.md:30-34]
 
@@ -158,3 +162,5 @@ The best next controlled research item is **P1 after P0**: add auditable evidenc
 [70] https://arxiv.org/pdf/2601.18250v1 — OrthoFoundation arXiv paper
 [71] https://raw.githubusercontent.com/ytrsk/OrthoFoundation-MSK-5M/main/README.md — OrthoFoundation-MSK-5M raw README
 [72] https://huggingface.co/datasets/rajpurkarlab/3DReasonKnee/raw/main/README.md — 3DReasonKnee Hugging Face data card README
+[73] https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/749145
+[74] https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/747455
