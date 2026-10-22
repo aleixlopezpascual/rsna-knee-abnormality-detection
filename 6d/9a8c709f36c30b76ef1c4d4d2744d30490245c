@@ -1,0 +1,112 @@
+notebooks/experiments/series_selection_inventory/kernel-metadata.json
+  s_01c96f5d71c499::t_4ab17e7313bd6e 1-16
+tests/test_series_selection.py
+  s_69c59b4c79db9e::t_88f99c96f076e5 2,4,12-13
+  s_7db5e81f7b530d::t_baddd99c8bcb56 16
+  s_1b74fcb6af0b2c::t_3512150b18aac7 27,30,37,42,49,53,67,70-78,80,83,88,92,96,102,115,118,120,123,126,128-129,131,134,139,145,149-159,162,164,167,175,179-180
+  s_d89341f1d1c8ae::t_2181bf541d993b 1,3,5-11,14-15,17-26,28-29,31-36,38-41,43-48,50-52,54-59,68-69,79,81-82,84-87,89-91,93-95,97-101,103-114,116-117,119,121-122,124-125,127,130,132-133,135-138,140-144,146-148,160-161,163,165-166,168-173,176-178,181-189
+  s_69c59b4c79db9e::t_a959f00deb311d 60-66
+  s_a068939bf7308c::t_577763aefdaccd 174
+src/series_selection.py
+  s_1b74fcb6af0b2c::t_49c6ca7b791b85 69,163-167
+  s_8a8ca4bbd0ba1b::t_c26072808e1cd9 1-16,18-26,35-68,70-162,168-218
+  s_9ca28974f81a33::t_2826b676b52921 17,27,32-33
+  s_7db5e81f7b530d::t_92f1c70bbbd1c4 28-31,34
+notebooks/experiments/series_selection_inventory/series_selection_inventory.py
+  s_2f31477829fba5::t_2df06b215add9e 1-2,6,8-9,12-13,24,59-61,66-70,82-84,87-98,131-133,177,180-185,214,258,266,274,277-282,288,292-296,300,302-308,311-312,319-322,326,331,343-359,369-375,377-383,386,403-405
+  s_fd755620b55fd8::t_d7ca57ad7e0bfc 143-146,149-152,158-159,178
+  s_01c96f5d71c499::t_80809784ec205b 3-5,7,10-11,14-22,25-57,62-64,71-81,85,106-130,134-142,148,154-156,160-176,179,186-212,215-257,259-265,267-272,275-276,283-286,289-291,298-299,301,310,314-318,323-325,328-329,332-342,361-368,376,385,387-401,407-409
+  s_fd755620b55fd8::t_d352eec59c42db 99-104
+scripts/audit_series_selection.py
+  s_9ca28974f81a33::t_5e8cd43458a7d4 10
+  s_8a8ca4bbd0ba1b::t_17f37edae74369 1-9,11-14,22-64
+  s_1b74fcb6af0b2c::t_c09e0f0aacefdd 15-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "6d9a8c709f36c30b76ef1c4d4d2744d30490245c",
+  "prompts": {},
+  "sessions": {
+    "s_01c96f5d71c499": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "27615813-0c66-4fd4-8753-f139e5bd066c",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    },
+    "s_1b74fcb6af0b2c": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a355a708-2975-469c-8c89-8dd090d42471",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    },
+    "s_2f31477829fba5": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "a182dea7-7ce5-4360-9ec0-b31f2edc610b",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    },
+    "s_69c59b4c79db9e": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "e63b5439-fd29-4bec-9eb0-25bb2e33e3a0",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    },
+    "s_7db5e81f7b530d": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "96481875-20d9-4555-b6a9-87f3308bbdd9",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    },
+    "s_8a8ca4bbd0ba1b": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "3e4f5b47-af65-45a6-b72b-817a64da0dd5",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    },
+    "s_9ca28974f81a33": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "21f917e0-5d96-413f-8691-2ca5e9bfe36c",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    },
+    "s_a068939bf7308c": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "977a5798-0179-42e4-9c76-1a4971136c2b",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    },
+    "s_d89341f1d1c8ae": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "f52f0f04-4895-48f7-b8f8-a1f24252f568",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    },
+    "s_fd755620b55fd8": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "40490bb5-7b49-45f5-9680-cfddaa7374a7",
+        "model": "gemini-3.1-pro-preview"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
