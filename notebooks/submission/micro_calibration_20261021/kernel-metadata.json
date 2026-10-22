@@ -1,0 +1,23 @@
+{
+  "id": "aleixlopez/rsna-knee-micro-calibration-20261021",
+  "title": "RSNA Knee Micro-Calibration Exp-22",
+  "code_file": "rsna-knee-micro-calibration-20261021.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "dataset_sources": [
+    "nartaa/rsna-knee-publication-swa-weights-20261007",
+    "heliosli/rsna-orthofoundation-fold0-epoch7-20261004",
+    "rostigor/rsna-knee-r6-fe055406",
+    "heliosli/rsna-knee-compact-r7cnxfsss",
+    "goodpjw2008/rsna-knee-2-5d-convnext-reader",
+    "aleixlopez/rsna-knee-specialist-weights"
+  ],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "kernel_sources": [],
+  "model_sources": []
+}
