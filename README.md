@@ -30,6 +30,7 @@ High-performance machine learning repository for the **Radiological Society of N
 ---
 
 ## 📖 Table of Contents
+- [Competition Post-mortem & Next-Competition Playbook](docs/competition_postmortem.md)
 - [1. Competition Overview](#1-competition-overview)
 - [2. The 12 Abnormality Targets](#2-the-12-abnormality-targets)
 - [3. Key Architectural Innovations](#3-key-architectural-innovations)
