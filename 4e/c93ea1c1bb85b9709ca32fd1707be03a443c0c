@@ -1,0 +1,37 @@
+docs/top_solutions_analysis_and_benchmarking.md
+  s_dbf72aca4d213f::t_281514512cd396 294
+  s_dbf72aca4d213f::t_9a1289b874018f 183
+docs/endgame_playbook.md
+  s_dbf72aca4d213f::t_4958eff2197740 99
+  s_dbf72aca4d213f::t_17f1e898243d15 13
+docs/README.md
+  s_dbf72aca4d213f::t_490710be1b5c6f 1-75
+AGENTS.md
+  s_dbf72aca4d213f::t_2c2ac07ed60ff7 164-175,185-192
+  s_dbf72aca4d213f::t_75a2519fc33b71 181
+docs/solution_writeup.md
+  s_dbf72aca4d213f::t_dd994953a766dc 14
+  s_dbf72aca4d213f::t_9a8f62d4d72d26 187
+README.md
+  s_dbf72aca4d213f::t_bd6450c1875533 155-166,172-179
+  s_dbf72aca4d213f::t_a5ff9136f6f0d5 18,20-23,25-32,37-43
+  s_dbf72aca4d213f::t_813d4d6fe4a93f 6
+  s_dbf72aca4d213f::t_19fe41a7736862 168
+  s_dbf72aca4d213f::t_aee8eac706ed33 284
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "4ec93ea1c1bb85b9709ca32fd1707be03a443c0c",
+  "prompts": {},
+  "sessions": {
+    "s_dbf72aca4d213f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "642889b1-8609-40e9-a7e1-7c82fcaa1134",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
