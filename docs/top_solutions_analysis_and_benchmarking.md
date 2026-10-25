@@ -180,7 +180,7 @@ Newcomers frequently assume that because MRI is volumetric, 3D convolutions (e.g
 2. **Latent Gaussian Probit Quantile Normal Fusion:** We identified and solved the tail-compression flaw of standard linear rank blending. By mapping percentiles into latent standard normal space ($z = \Phi^{-1}(p)$), performing clinical target-weighted fusion, and mapping back via $\Phi(z)$, our pipeline preserved high-confidence detections with exponential sharpness.
 3. **Rigorous Physics Preprocessing:** Our implementation of vector-projection slice sorting ($\text{slice\_pos} = \vec{p} \cdot \vec{n}$), physical millimeter centering, left-knee canonicalization, and zero horizontal flip training adhered strictly to medical imaging physics.
 4. **Efficiency Track Engineering:** `exp-15 Efficiency Champion` (0.946 Macro AUC) executed in under 100 seconds with <2 GB RAM, representing an exceptionally optimized inference engine.
-5. **Software Engineering Standards:** The repository maintained production-grade engineering standards: clean typed Python 3.10+ interfaces, deterministic seeding, 100% clean Ruff linting, and **45 passing unit tests** in ~5.5 seconds.
+5. **Software Engineering Standards:** The repository maintained production-grade engineering standards: clean typed Python 3.10+ interfaces, deterministic seeding, 100% clean Ruff linting, and **62 passing unit tests** in ~9.0 seconds.
 
 ---
 
@@ -291,7 +291,7 @@ To maximize developer velocity within compute constraints, our repository implem
    ├─────────────────────────────────────────┤       ├─────────────────────────────────────────┤
    │ RESPONSIBILITIES:                       │       │ RESPONSIBILITIES:                       │
    │ • Modular library development (`src/`)  │       │ • Multi-epoch 5-fold specialist training│
-   │ • 45-test unit suite (pytest in ~5.5s)  │       │ • High-resolution 384px DICOM passes   │
+   │ • 62-test unit suite (pytest in ~9s)    │       │ • High-resolution 384px DICOM passes   │
    │ • Report NLP extraction & parsing       │       │ • Official submission kernel evaluation │
    │ • Ensembling & Probit quantile fusion   │       │ • Efficiency Track benchmark runs       │
    └─────────────────────────────────────────┘       └─────────────────────────────────────────┘

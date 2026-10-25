@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-orange.svg)](https://pytorch.org/)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![Tests: 45 passed](https://img.shields.io/badge/tests-45%20passed-green.svg)](https://docs.pytest.org/)
+[![Tests: 62 passed](https://img.shields.io/badge/tests-62%20passed-green.svg)](https://docs.pytest.org/)
 [![Public LB: 0.958](https://img.shields.io/badge/Public%20LB-0.958-gold.svg)](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection)
 [![Kaggle: $77,000 USD](https://img.shields.io/badge/Kaggle-RSNA%20Knee%20Detection-blue)](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection)
 
@@ -15,22 +15,32 @@ High-performance machine learning repository for the **Radiological Society of N
 
 | Ref | Submission / Experiment | Public Score | Status | Key Innovation |
 | :---: | :--- | :---: | :---: | :--- |
+| **`57478743`** | **`exp-22 Micro-Calibration Public-LB`** | **0.958** 🏆 | **COMPLETE** | Exp-18 base + 5-Fold ASL Specialist with micro-calibration routing in Probit space |
 | **`57316129`** | **`exp-18 Pure SOTA 0.958 Peak`** | **0.958** 🏆 | **COMPLETE** | CoAtNet-384 + C224 + Heliosli R6 (Flip TTA) + R7 (fastMRI+ aux) + 1/10th ConvNeXt reader |
-| `57228234` | `exp-16 S6Fall Blend 0955` | **0.954** | `COMPLETE` | Upgraded 70/30 blend with nartaa's new all-data S6 ConvNeXt (`E_prior_s42_fall.pt`, 0.950 solo) |
-| `57119660` | `exp-13 Grandmaster Probit Superstack` | **0.954** | `COMPLETE` | **4-Pillar Multi-Domain Fusion:** Fuses 0.954 Helios Baseline (80–98%) + 2.5D ConvNeXt Reader (+0.079 Lateral OA) + complete 5-Fold ASL Specialist (Fracture +0.032) in Latent Gaussian Probit space |
-| `57114576` | `exp-12 Helios 0.954 Apex` | **0.954** | `COMPLETE` | SOTA CoAtNet-384 SWA (0.70) + OrthoFoundation S6 ConvNeXt (0.30) |
+| `57410300` | `exp-21 Grandmaster 4-Stream Superstack` | **0.957** | **COMPLETE** | 0.958 SOTA Anchor + 5-Fold ASL Specialist in Latent Gaussian Probit space |
+| `57365961` | `exp-20 Golden Fusion 0.958+ Superstack` | **0.957** | **COMPLETE** | 0.958 SOTA Anchor + complete 5-Fold ASL Specialist (+0.032 Fracture lift) |
+| `57263998` | `exp-18-calib Grandmaster 0.957 Calibration` | **0.952** | **COMPLETE** | ConvNeXt dominant routing (0.78 Lat OA / 0.63 Baker's) + 5-Fold ASL Specialist |
+| `57228234` | `exp-16 S6Fall Blend 0955` | **0.954** | **COMPLETE** | Upgraded 70/30 blend with nartaa's new all-data S6 ConvNeXt (`E_prior_s42_fall.pt`, 0.950 solo) |
 | **`57174412`** | **`exp-15 Efficiency Champion 0949`** | **0.946** ⚡ | **COMPLETE** | High-throughput entry for the **$18,000 Efficiency Track** (<100s execution, <2 GB RAM) |
-| `57140186` | `exp-14 5-Pillar Probit Mega-Stack` | **0.953** | `COMPLETE` | 5-Pillar Probit Mega-Stack with focal joint-crop zoom |
-| `57078027` | `exp-11 4-Reader Probit Superstack` | **0.950** | `COMPLETE` | CoAtNet-384 + CoAtNet-224 + ConvNeXt + 5-Fold Specialist |
-| `57047082` | `exp-10 Pure Apex SOTA Baseline` | **0.950** | `COMPLETE` | Established verified 0.950 SOTA anchor |
-| `57019581` | `exp-09 Apex Specialist (2-Fold)` | **0.948** | `COMPLETE` | First leap above 0.943 ceiling |
-| `56907494` | `exp-06 Golden Fusion v3` | **0.943** | `COMPLETE` | Foundation consensus (DINOv2 + Raptor + CoAtNet) |
-| `56748754` | `exp-01 Baseline v1` | **0.891** | `COMPLETE` | Initial 2.5D baseline |
+| `57140186` | `exp-14 5-Pillar Probit Mega-Stack` | **0.953** | **COMPLETE** | 5-Pillar Probit Mega-Stack with focal joint-crop zoom |
+| `57119660` | `exp-13 Grandmaster Probit Superstack` | **0.954** | **COMPLETE** | **4-Pillar Multi-Domain Fusion:** Fuses 0.954 Helios Baseline (80–98%) + 2.5D ConvNeXt Reader (+0.079 Lateral OA) + complete 5-Fold ASL Specialist (Fracture +0.032) in Latent Gaussian Probit space |
+| `57114576` | `exp-12 Helios 0.954 Apex` | **0.954** | **COMPLETE** | SOTA CoAtNet-384 SWA (0.70) + OrthoFoundation S6 ConvNeXt (0.30) |
+| `57078027` | `exp-11 4-Reader Probit Superstack` | **0.950** | **COMPLETE** | CoAtNet-384 + CoAtNet-224 + ConvNeXt + 5-Fold Specialist |
+| `57047082` | `exp-10 Pure Apex SOTA Baseline` | **0.950** | **COMPLETE** | Established verified 0.950 SOTA anchor |
+| `57019581` | `exp-09 Apex Specialist (2-Fold)` | **0.948** | **COMPLETE** | First leap above 0.943 ceiling |
+| `56907494` | `exp-06 Golden Fusion v3` | **0.943** | **COMPLETE** | Foundation consensus (DINOv2 + Raptor + CoAtNet) |
+| `56748754` | `exp-01 Baseline v1` | **0.891** | **COMPLETE** | Initial 2.5D baseline |
 
 ---
 
 ## 📖 Table of Contents
-- [Competition Post-mortem & Next-Competition Playbook](docs/competition_postmortem.md)
+- [📚 Documentation Index (`docs/README.md`)](docs/README.md)
+- [🏆 Top Solutions Analysis & Architectural Benchmarking](docs/top_solutions_analysis_and_benchmarking.md)
+- [📝 Competition Post-mortem & Next-Competition Playbook](docs/competition_postmortem.md)
+- [🔬 Final Solution Technical Writeup](docs/solution_writeup.md)
+- [🛡️ Competitive Advantage & Gap Analysis](docs/competitive_advantages_and_gap_analysis.md)
+- [🎯 Final Submission Selection Decision](docs/final-submission-selection.md)
+- [🔍 Prior RSNA Solution Transfer Review](docs/rsna_prior_solution_transfer_review.md)
 - [1. Competition Overview](#1-competition-overview)
 - [2. The 12 Abnormality Targets](#2-the-12-abnormality-targets)
 - [3. Key Architectural Innovations](#3-key-architectural-innovations)
@@ -142,14 +152,31 @@ rsna-knee-abnormality-detection/
 ├── oof/                         # Out-of-fold validation predictions (.parquet)
 ├── submissions/                 # Generated competition submission files (.csv)
 ├── docs/                        # Architectural records, intelligence, and logs
-│   ├── competition-brief.md     # High-level overview and specifications
-│   ├── experiments.md           # Master experiment ledger (CV scores & parameters)
+│   ├── README.md                # Master documentation index
+│   ├── top_solutions_analysis_and_benchmarking.md # Top solution deconstruction & benchmarking
+│   ├── competition_postmortem.md # Post-competition diagnosis & next-competition playbook
+│   ├── solution_writeup.md      # Comprehensive end-to-end technical report
+│   ├── competitive_advantages_and_gap_analysis.md # Grandmaster gap analysis & competitive edge
+│   ├── final-submission-selection.md # Final 2-slot selection audit & efficiency hedge
+│   ├── rsna_prior_solution_transfer_review.md # Prior RSNA challenge solution transfer
+│   ├── historical_competitions_deep_dive.md # Historical RSNA cross-domain review
+│   ├── competition_masterclass.md # End-to-end medical physics & modeling guide
+│   ├── compute_and_hardware.md  # Local M2 Pro vs. Cloud hardware profile
+│   ├── experiments.md           # Master experiment ledger (exp-01 to exp-23)
+│   ├── oof-provenance-audit.md  # OOF prediction provenance & audit trail
 │   └── intel/                   # Forum intel, data specs, and top notebook summaries
-└── tests/                       # Pytest verification suite (18 passing tests)
+└── tests/                       # Pytest verification suite (62 passing tests)
     ├── test_metrics.py          # Metric accuracy and single-class edge cases
     ├── test_dataset.py          # Geometry ordering, laterality flip, 5-fold split
     ├── test_models.py           # Model forward shapes, slot masking, backward pass
-    └── test_report_reader.py    # Report NLP extraction across multiple languages
+    ├── test_loss.py             # Asymmetric Focal Loss & class frequency weighting
+    ├── test_ensemble.py         # Multi-model rank averaging & Probit normal fusion
+    ├── test_landmark.py         # Joint-line center physical coordinate locator
+    ├── test_report_reader.py    # Report NLP extraction across multiple languages
+    ├── test_report_continuous_extractor.py # Continuous clinical certainty extractor
+    ├── test_series_selection.py # Dynamic series and plane selection tests
+    ├── test_specialist_metrics.py # Rare-target specialist validation
+    └── test_optimize_routing.py # Bounded Nelder-Mead routing weight optimizer
 ```
 
 ---
@@ -254,7 +281,7 @@ kaggle competitions submissions -c rsna-knee-abnormality-detection
 All changes must pass strict unit testing and linting before merging or submitting:
 
 ```bash
-# Run the complete test suite (45 unit tests)
+# Run the complete test suite (62 unit tests)
 pytest -v
 
 # Run linting and formatting checks

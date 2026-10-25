@@ -161,22 +161,35 @@ rsna-knee-abnormality-detection/
 ├── oof/                         # Out-of-fold validation predictions (Parquet/CSV)
 ├── submissions/                 # Generated competition submission files
 ├── docs/                        # Architectural records, intelligence, and logs
-│   ├── competition-brief.md     # High-level overview and specifications
-│   ├── experiments.md           # Master experiment ledger (CV scores & parameters)
+│   ├── README.md                # Master documentation index
+│   ├── top_solutions_analysis_and_benchmarking.md # Top solution deconstruction & benchmarking
+│   ├── competition_postmortem.md # Post-competition diagnosis & next-competition playbook
+│   ├── solution_writeup.md      # Comprehensive end-to-end technical report
+│   ├── competitive_advantages_and_gap_analysis.md # Grandmaster gap analysis & competitive edge
+│   ├── final-submission-selection.md # Final 2-slot selection audit & efficiency hedge
+│   ├── rsna_prior_solution_transfer_review.md # Prior RSNA challenge solution transfer
+│   ├── historical_competitions_deep_dive.md # Historical RSNA cross-domain review
+│   ├── competition_masterclass.md # End-to-end medical physics & modeling guide
+│   ├── compute_and_hardware.md  # Local M2 Pro vs. Cloud hardware profile
+│   ├── experiments.md           # Master experiment ledger (exp-01 to exp-23)
+│   ├── oof-provenance-audit.md  # OOF prediction provenance & audit trail
 │   └── intel/                   # Forum intel, data specs, and top notebook summaries
 ├── scripts/                     # Operational automation scripts
 │   ├── build_grandmaster_superstack_notebook.py  # Builds 0.956+ superstack
 │   ├── build_complete_specialist_notebook.py     # Parameterized 5-fold generator
 │   └── setup_symlinks.sh                         # Symlink synchronization script
-└── tests/                       # Pytest verification suite (37 passing unit tests)
+└── tests/                       # Pytest verification suite (62 passing unit tests)
     ├── test_metrics.py          # Metric accuracy and single-class edge cases
     ├── test_dataset.py          # Geometry ordering and slab extraction
     ├── test_models.py           # Model forward shapes, slot masking, backward pass
-    ├── test_ensemble.py        # Multi-model rank averaging & 3-way routing fusion
-    ├── test_landmark.py        # Physical joint-center locator & slab extraction
-    ├── test_loss.py            # Asymmetric Focal Loss & inverse frequency weighting
-    ├── test_optimize_routing.py # Routing optimizer validation
-    └── test_report_reader.py   # Multilingual report extractor rules & leakage tests
+    ├── test_loss.py             # Asymmetric Focal Loss & inverse frequency weighting
+    ├── test_ensemble.py         # Multi-model rank averaging & Probit normal fusion
+    ├── test_landmark.py         # Physical joint-center locator & slab extraction
+    ├── test_report_reader.py    # Multilingual report extractor rules & leakage tests
+    ├── test_report_continuous_extractor.py # Continuous clinical certainty extractor
+    ├── test_series_selection.py # Dynamic series and plane selection tests
+    ├── test_specialist_metrics.py # Rare-target specialist validation
+    └── test_optimize_routing.py # Routing optimizer validation
 ```
 
 ---

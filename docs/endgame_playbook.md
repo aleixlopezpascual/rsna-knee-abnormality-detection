@@ -10,7 +10,7 @@
 * **Our All-Time Peak Score:** **0.958 Macro ROC-AUC** (`exp-18`, Ref: `57316129`, Top Gold Medal Tier)
 * **Our Minority ASL Consensuses:** **0.957 Macro ROC-AUC** (`exp-19` Ref: `57365961`, `exp-20` Ref: `57410300`)
 * **Our Efficiency Track Champion:** **0.946 Macro ROC-AUC in <100 seconds (<2 GB RAM)** (`exp-15`, Ref: `57174412`)
-* **Test Suite:** **45 unit tests passing** in 5.68 seconds (`pytest -v`)
+* **Test Suite:** **62 unit tests passing** in ~9 seconds (`pytest -v`)
 * **Code Quality:** 100% clean under Ruff (`ruff check src/ tests/ scripts/`)
 
 ---
@@ -96,7 +96,7 @@ If resuming work, pick one of these four concrete paths:
 ## 🛠️ Essential Operational Commands
 
 ```bash
-# Run the complete test suite (45 unit tests)
+# Run the complete test suite (62 unit tests)
 pytest -v
 
 # Run fast code linting and formatting

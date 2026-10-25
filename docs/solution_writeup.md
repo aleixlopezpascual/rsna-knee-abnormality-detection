@@ -11,7 +11,7 @@ This document presents the complete engineering methodology, architectural innov
 * **Public Leaderboard Peak:** **0.958 Macro ROC-AUC** (Ref: `57316129`, Top Gold Medal Tier).
 * **Consensus Superstack Verification:** **0.957 Macro ROC-AUC** (Refs: `57365961` & `57410300`, fusing our proprietary 5-Fold ASL Specialist in Latent Gaussian Probit space).
 * **Efficiency Track Contender:** **0.946 Macro ROC-AUC in <100s execution with <2 GB RAM** (Ref: `57174412`), competing directly for 1st Place in the **$18,000 Efficiency Prize** ($7k / $6k / $5k).
-* **Verification & Engineering Standards:** Full Python 3.10+ modular repository, deterministic seeding (seed 42), **45 passing unit tests** in ~5.5s, 100% clean Ruff linting, and zero data leakage.
+* **Verification & Engineering Standards:** Full Python 3.10+ modular repository, deterministic seeding (seed 42), **62 passing unit tests** in ~9s, 100% clean Ruff linting, and zero data leakage.
 
 ---
 
@@ -184,6 +184,6 @@ The current selection decision is recorded in [`docs/final-submission-selection.
 
 ## 9. Verification & Code Quality
 
-* **Pytest Verification:** All **45 unit tests pass** in 5.68 seconds (`pytest -v`).
+* **Pytest Verification:** All **62 unit tests pass** in ~9 seconds (`pytest -v`).
 * **Linter & Formatter:** 100% clean under Ruff (`ruff check src/ tests/ scripts/`).
 * **Source Control:** Synchronized on GitHub `origin/master` at `https://github.com/aleixlopezpascual/rsna-knee-abnormality-detection`.
