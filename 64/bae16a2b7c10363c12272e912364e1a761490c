@@ -1,0 +1,19 @@
+docs/top_solutions_analysis_and_benchmarking.md
+  s_dbf72aca4d213f::t_ebe3013bb3dcc2 1-310
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "64bae16a2b7c10363c12272e912364e1a761490c",
+  "prompts": {},
+  "sessions": {
+    "s_dbf72aca4d213f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "642889b1-8609-40e9-a7e1-7c82fcaa1134",
+        "model": "gemini-3.8-flash"
+      },
+      "human_author": "Aleix López <aleix.lopez@glovoapp.com>"
+    }
+  }
+}
