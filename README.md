@@ -35,7 +35,7 @@ High-performance machine learning repository for the **Radiological Society of N
 
 ## 📖 Table of Contents
 - [📚 Documentation Index (`docs/README.md`)](docs/README.md)
-- [🏆 Top Solutions Analysis & Architectural Benchmarking](docs/top_solutions_analysis_and_benchmarking.md)
+- [🏆 1st Place & Top Solutions Benchmarking](docs/top_solutions_analysis_and_benchmarking.md) ([Kaggle 1st Place Writeup](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/writeups/1st-place-solution))
 - [📝 Competition Post-mortem & Next-Competition Playbook](docs/competition_postmortem.md)
 - [🔬 Final Solution Technical Writeup](docs/solution_writeup.md)
 - [🛡️ Competitive Advantage & Gap Analysis](docs/competitive_advantages_and_gap_analysis.md)

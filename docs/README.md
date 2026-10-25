@@ -25,7 +25,7 @@
 
 | Document | Description | Key Topics |
 | :--- | :--- | :--- |
-| [**Top Solutions Analysis & Benchmarking**](top_solutions_analysis_and_benchmarking.md) | **Winning methodologies deconstruction & comparative benchmark.** | Analyzes winning techniques across top teams (0.965–0.970), extracts key learnings, benchmarks our 0.958 baseline and 0.946 Efficiency Champion, and reviews LLM/hardware workflows. |
+| [**Top Solutions Analysis & Benchmarking**](top_solutions_analysis_and_benchmarking.md) | **Winning methodologies deconstruction & comparative benchmark.** | Case study of [1st Place Solution (Team Kangaroo)](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/writeups/1st-place-solution), analysis of winning techniques (0.965–0.970), key learnings, benchmark vs. our 0.958 baseline and 0.946 Efficiency Champion, and hardware/LLM workflows. |
 | [**Competition Post-mortem & Playbook**](competition_postmortem.md) | **Root-cause analysis and operational retrospective.** | Analyzes late-start impact, validation mismatch on weak labels, public-LB selection risk, AI-agent retrospective, and the 10-step Day 1 to Endgame playbook. |
 | [**Prior RSNA Solution Transfer Review**](rsna_prior_solution_transfer_review.md) | **Source-verified review of 15 top solutions from 5 RSNA challenges.** | Detailed extraction from 2022–2025 RSNA competitions (Lumbar Spine, Abdominal Trauma, Mammography, Cervical Spine, Aneurysm) assessing transferable techniques. |
 

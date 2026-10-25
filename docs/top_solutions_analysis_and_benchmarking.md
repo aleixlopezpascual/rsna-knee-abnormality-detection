@@ -36,7 +36,87 @@ Because each target carries an equal $1/12$ weight, high-prevalence pathologies 
 
 ## 2. Top Solution Breakdown: Winning Techniques Across Top Teams
 
-A comprehensive synthesis of the winning writeups, forum technical disclosures, and codebase architectures reveals that top-ranking teams did not win through brute-force hyperparameter sweeps or simple longer training. Instead, their success was driven by five foundational engineering pillars:
+### 2.0 In-Depth Case Study: 1st Place Solution (Team Kangaroo)
+> **Official Writeup:** [Kaggle 1st Place Solution — Team Kangaroo](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/writeups/1st-place-solution)  
+> **Authors:** `@sakaku`, `@liushuzhi`, and `@tascj` (Team Kangaroo)  
+> **Primary Philosophy:** Approached the competition primarily as an **agentic labeling, anatomical distillation, and multimodal representation challenge**.
+
+Rather than focusing solely on vision backbone scaling or hyperparameter grid searches, the 1st place winners fundamentally solved the underlying data and spatial bottlenecks:
+
+```
+                  TEAM KANGAROO (1ST PLACE) ARCHITECTURAL FLOW:
+
+   4,349 UNSTRUCTURED REPORTS & DICOMs
+                  │
+                  ▼
+   ┌──────────────────────────────────────────────┐
+   │ AGENTIC LLM READING GUIDES (Codex + pi)      │
+   │ • Calibrated soft probabilities in [0.0, 1.0] │
+   │ • 3D anatomical ROI cuboid bounding boxes    │
+   │ • 2D per-slice lesion coverage masks         │
+   │ • 4096-d Qwen3-Embedding-8B report semantics │
+   └──────────────────────┬───────────────────────┘
+                          │
+                          ▼
+   ┌──────────────────────────────────────────────┐
+   │ PHYSICAL & GEOMETRIC PREPROCESSING           │
+   │ • ResNet18-D automated laterality classifier │
+   │ • 140 mm physical FOV normalization          │
+   │ • 112 mm targeted crop around 3D ROIs (384px)│
+   └──────────────────────┬───────────────────────┘
+                          │
+                          ▼
+   ┌──────────────────────────────────────────────┐
+   │ MULTI-FAMILY BACKBONES & IN-BOX ATTENTION    │
+   │ • ConvNeXt-T (Depthwise modern conv)         │
+   │ • MambaOut-B+ (State-Space / SSM vision)     │
+   │ • MaxxViT-V2-B (Multi-axis attention)        │
+   │ • 3D ROI Box Pooling + In-Box Attention      │
+   └──────────────────────┬───────────────────────┘
+                          │
+                          ▼
+   ┌──────────────────────────────────────────────┐
+   │ MULTI-TASK AUXILIARY LOSS TRAINING (8 Epochs)│
+   │ • Primary Loss: Soft-label BCE               │
+   │ • Aux Head 1: Cell-level lesion coverage BCE │
+   │ • Aux Head 2: Cosine distance to 4096-d      │
+   │   Qwen3-Embedding report representations     │
+   │ • Optimizer: AdamW, lr 5e-5, EMA 0.999       │
+   └──────────────────────┬───────────────────────┘
+                          │
+                          ▼
+   ┌──────────────────────────────────────────────┐
+   │ POST-PROCESSING & CALIBRATION                │
+   │ • Temperature scaling: p' = σ(k · logit p)   │
+   │ • 5-Fold multi-seed ensemble                 │
+   │ • Efficiency Entry: 0.964 LB in 230s via     │
+   │   single 256px ConvNeXt-T + TensorRT         │
+   └──────────────────────────────────────────────┘
+```
+
+#### Detailed Breakdown of 1st Place Innovations:
+1. **Agentic Labeling & Pseudo-Mask Distillation:**
+   - Deployed frontier LLMs prompted with reflection-trained reading guides to extract three synchronized supervision signals from the unstructured reports:
+     - **Calibrated continuous probabilities** representing diagnostic certainty.
+     - **3D anatomical ROI cuboid bounds** for joint compartments and ligaments.
+     - **2D per-slice lesion coverage masks** identifying exact pathology slices.
+2. **Multimodal Report Embedding Auxiliary Loss (The Breakthrough):**
+   - The vision models were equipped with a training-only projection head predicting **4096-dimensional text embeddings** extracted from `Qwen3-Embedding-8B`.
+   - By optimizing a cosine distance loss between the pooled visual features and the text embedding of the complete radiology report, the backbones were forced to learn high-level diagnostic abstractions that raw labels alone could never supervise.
+3. **Targeted ROI Cropping & 3D Box Pooling:**
+   - Standardized knee laterality via an auxiliary ResNet18-D classifier.
+   - Normalized scans to a 140 mm FOV, then cropped tightly around detected 3D ROIs (**112 mm bounding box resized to 384 px**).
+   - Applied **3D ROI box pooling and in-box attention** across native slices, capturing localized pathology without blurring across physical slice gaps.
+4. **Architectural Diversity:**
+   - Ensembled three distinct model families: `ConvNeXt-T` (pure modern conv), `MambaOut-B+` (SSM state-space vision), and `MaxxViT-V2-B` (multi-axis attention).
+5. **Logit-Space Temperature Calibration:**
+   - Applied target-specific temperature calibration to logits ($p' = \sigma(k \cdot \text{logit } p)$), sharpening rank separations on high-confidence tails.
+6. **Efficiency Track Mastery (0.964 LB in 230 seconds):**
+   - Team Kangaroo deployed a single 256 px `ConvNeXt-T` evaluating **only fluid-sensitive sequences** accelerated via TensorRT, running in just 230 seconds and scoring **0.964 Public LB**.
+
+---
+
+A comprehensive synthesis of the winning writeups (including Team Kangaroo and other top contenders) reveals five universal engineering pillars:
 
 ```
                       THE 5 ARCHITECTURAL PILLARS OF TOP TEAMS:
